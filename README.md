@@ -4,6 +4,7 @@ Write a Shell for Operating Systems 2021
 This shell will have the following commands:
 
 COMMANDS:
+
 -ls
 -pwd
 -
@@ -19,3 +20,4 @@ DEVELOPMENT ENVIRONMENT:
 
 VERSION CONTROL:
 -GitHub (this repo)
+
