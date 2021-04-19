@@ -3,21 +3,15 @@ Write a Shell for Operating Systems 2021
 
 This shell will have the following commands:
 
-COMMANDS:
-
+# COMMANDS:
 -ls
 -pwd
--
--
--
--
--
 
 for a total of 100 points.
 
-DEVELOPMENT ENVIRONMENT:
+# DEVELOPMENT ENVIRONMENT:
 -Google Cloud Shell Editor
 
-VERSION CONTROL:
+# VERSION CONTROL:
 -GitHub (this repo)
 
