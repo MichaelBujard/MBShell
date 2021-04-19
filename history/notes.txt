@@ -1,0 +1,1 @@
+History prints out every command, even invalid commands typed to the terminal.
