@@ -11,7 +11,7 @@ This shell will have the following commands:
 
 - bang (!) 30 points
 - history 30 points
-- redirect file to stdin/out 40 points
+- redirect file to stdin(<)/out(>) 40 points 
 
 for a total of 100 points.
 
