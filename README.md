@@ -45,3 +45,7 @@ tab	Autocompletion from file names
 
 Up arrow	Capture up-arrow to scroll back through recent history	
 20
+
+# Deadlines:
+- due the day of final exams, 
+- ? Monday, May 10?
