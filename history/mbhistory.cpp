@@ -139,7 +139,9 @@ int read_history_range(const char *filename, int from, int to) {
  * If filename is NULL, then write the
  * history list to ~/.history.  Returns 0 on success, or errno on a read or write error.
  */
-int write_history (const char *filename)
+int write_history (const char *filename) {
+    return 0; // success!
+}
 
 /*
  * int append_history (int nelements, const char *filename)
@@ -244,7 +246,7 @@ int history_quotes_inhibit_expansion;
 //If  non-zero, double-quoted words are not scanned for the history expansion character or the history comment char-
 //       acter.  The default value is 0.
 
-rl_linebuf_func_t * history_inhibit_expansion_function;
+// rl_linebuf_func_t * history_inhibit_expansion_function; // commented out because type undefined ?
 /*
  This should be set to the address of a function that takes two arguments: a char * (string) and an int index  into
        that  string  (i).  It should return a non-zero value if the history expansion starting at string[i] should not be
