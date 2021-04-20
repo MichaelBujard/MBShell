@@ -95,12 +95,78 @@ typedef struct _hist_state {
 
 /*
  * history_search_pos (const char *string, int direction, int pos)
- * 
+ * Search  for  string  in the history list, starting at pos, an absolute index into the list. 
+ * If direction is negative, the search proceeds backward from pos, otherwise forward.  
+ * Returns the absolute index of the history element where string was found, or -1 otherwise.
  */
 int history_search_pos(const char *string, int direction, int pos) {
     return 0;
 }
 
+/*
+ * Managing the History File SECTION:
+ * The History library can read the history from and write it to a file.
+ * This section of code (eventually) will contain functions + documentation for 
+ * managing a history file...
+ */
+
+ /*
+  * int read_history(const char *filename)
+  * Add the contents of filename to the history list, a line at a time.
+  * If filename is NULL, then read  from  ~/.history.
+  * Returns 0 if successful, or errno if not.
+  */
+int read_history(const char *filename) {
+    return 0;
+}
+
+/*
+ * int read_history_range(const char *filename, int from, int to)
+ * description: Read a range of lines from filename, adding them to the history list.
+ * Start reading at line from and end at to.
+ * If from is zero, start at the beginning.  
+ * If to is less than from, then read until the end of the file.  If  filename is NULL, 
+ * then read from ~/.history.  Returns 0 if successful, or errno if not.
+ */
+int read_history_range(const char *filename, int from, int to) {
+    return 0;
+}
+
+/*
+ * int write_history (const char *filename)
+ * Description: 
+ * Write  the  current  history  to filename, overwriting filename if necessary.
+ * If filename is NULL, then write the
+ * history list to ~/.history.  Returns 0 on success, or errno on a read or write error.
+ */
+int write_history (const char *filename)
+
+/*
+ * int append_history (int nelements, const char *filename)
+ * Append the last nelements of the history list to filename.
+ * If filename is NULL, then append to  ~/.history.
+ * Returns 0 on success, or errno on a read or write error.
+ *
+ */
+int append_history (int nelements, const char *filename) {
+    return 0; // success!
+}
+
+
+/*
+ * int history_truncate_file (const char *filename, int nlines)
+ * Truncate  the  history file filename, leaving only the last nlines lines.
+ * If filename is NULL, then ~/.history is truncated.
+ * Returns 0 on success, or errno on failure.
+ */
+int history_truncate_file (const char *filename, int nlines) {
+    return 0; // Success!
+}
+
+/*
+ * History Expansion SECTION:
+ * do we want / need to implement this functionality?
+ */
 
 /*
 This is broken code. It just lists some history variables.
