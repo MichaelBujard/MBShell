@@ -183,7 +183,6 @@ int history_base;
 The logical offset of the first entry in the history list.
 */
 
-
 int history_length;
 /*
 The number of entries currently stored in the history list.
