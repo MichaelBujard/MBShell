@@ -29,3 +29,24 @@ History Storage
          int size;             /* Number of slots allocated to this array. */
          int flags;
        } HISTORY_STATE;
+
+       NOTES:
+
+       - history library:
+
+       - history list:
+
+       - history expansion: 
+
+       - event designator: a reference to a command line entry in the history list. Unless the reference
+        is absolute (?), events are relative to the current position in the history list.
+
+        An absolute reference is where 0 is the beginning of time-eth command, and we type the absolute 
+        number of the history entry.
+
+        - word designator: a symbol used to select desired words.
+         ':' separates event specification from word designator. Not needed if ^, $, *, -, %.
+
+The history library seems to be a file that contains:
+    1) a history list,
+    2) arbitrary data associated with each history line (what is a history line? What is it called?)

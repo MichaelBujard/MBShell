@@ -10,8 +10,14 @@ typedef struct _hist_entry {
 } HIST_ENTRY;
 
 // the history list itself can be declared as
-
-HIST_ENTRY ** the_history_list;
+HIST_ENTRY ** mb_history_list;
+/*
+ * This function returns info about the entire history list/individual list entries.
+ * The above mb_history_list (void) return a NULL terminated array of HIST_ENTRY * that is the current
+ * input history. Element 0 of this list is the beginning of time. 
+ * 
+ * If there is no history, return null.
+ */
 
 // the state of the History library is encapsulated into a single structure:
 
@@ -24,8 +30,77 @@ typedef struct _hist_state {
     int offset;           /* location pointer within this array. */
     int length;           /* Number of elements within this array. */
     int size;             /* Number of slots allocated to this array. */
-    int flags;            /* Study TODO: What are these? */
+    int flags;            /* Study TODO: What are these? "If the flags member includes
+                           * HS_STIFLED, then the history has been stifled. 
+                           * What does that mean, really?
+                           */
 } HISTORY_STATE;
+
+/*
+ * TODO: Write functions that use these data structures.
+ * History Functions SECTION:
+ * This section describes the calling sequence for the various functions exported by the GNU History 
+ * library.
+ * e.g. void using_history (void) :
+ * Begin a session in which the history functions might be used. This initializes the interactive 
+ * variables.
+ *
+ * e.g. 2: 
+ * HISTORY_STATE * history_get_history_state (void)
+ * Returns a structure describing the current state of the input history.
+ *
+ * e.g. 3: void history_set_history_state (HISTORY_STATE *state)
+ * Set the state of the history list according to state.
+ *
+ */
+
+/*
+ * History List Management SECTION:
+ * These functions manage individual entries on the history list, / set params managing list itself.
+ */
+ /*
+  * void add_history(const char *string)
+  * Place string at the end of the history list. The associated data field (if any) is set to NULL.
+  */
+
+/*
+ * Searching the History List SECTION:
+ * Functions that allow searching of the history list for entries containing a specific string. 
+ * Searching may be performed both forward and backward from the current history posn.
+ * The search may be ANCHORED
+ *
+ * FYI, ANCHORED means "the string must match at the beginning of the history entry"
+ * 
+ * e.g. 1 
+ * int history_search (const char *string, int direction)
+ * description of function: Search the history for _string_, starting at the current history offset.
+ * If direction is less than 0, then the search is through previous entries, otherwise through 
+ * subsequent entries. If string is found, then the current history index is set to that history entry,
+ * and the value returned is the offset in the line of the entry where _string_ was found.
+ * Otherwise, nothing is changed,  and a -1 is returned.
+ */
+
+ /*
+  * int history_search_prefix (const char * string, int direction)
+  *
+  * Description: Search the history for _string_, starting at the current history offset.
+  * The search is anchored:
+  *   - i.e. matching lines must begin with _string_.
+  * If direction is less than 0, then the search is through previous entries, otherwise 
+  * through subsequent entries. 
+  * If _string_ is found, then the current history index is set to that history entry, and the value 
+  * returned is 0. Otherwise, nothing is 
+  * changed, and a -1 is returned.
+  */
+
+/*
+ * history_search_pos (const char *string, int direction, int pos)
+ * 
+ */
+int history_search_pos(const char *string, int direction, int pos) {
+    return 0;
+}
+
 
 /*
 This is broken code. It just lists some history variables.
