@@ -41,27 +41,119 @@ typedef struct _hist_state {
  * History Functions SECTION:
  * This section describes the calling sequence for the various functions exported by the GNU History 
  * library.
- * e.g. void using_history (void) :
+ */
+
+/*
+ * Initializing History and State Management SECTION:
+ * This section describes functions used to initialize and manage the state of the History library 
+ * when you  want  to use the history functions in your program.
+ * 
+ */
+
+/* void using_history (void) :
  * Begin a session in which the history functions might be used. This initializes the interactive 
  * variables.
- *
- * e.g. 2: 
+ */
+void using_history(void) {
+    // return void
+}
+
+ /* e.g. 2: 
  * HISTORY_STATE * history_get_history_state (void)
  * Returns a structure describing the current state of the input history.
- *
- * e.g. 3: void history_set_history_state (HISTORY_STATE *state)
- * Set the state of the history list according to state.
- *
  */
+HISTORY_STATE * history_get_history_state (void) {
+    HISTORY_STATE *hsp;
+    return hsp;  // dummy return value to keep correction happy
+}
+
+
+/*
+ * void history_set_history_state (HISTORY_STATE *state)
+ * Set the state of the history list according to state.
+ */
+void history_set_history_state (HISTORY_STATE *state) {
+    // return void!
+}
+
 
 /*
  * History List Management SECTION:
  * These functions manage individual entries on the history list, / set params managing list itself.
  */
+
  /*
   * void add_history(const char *string)
   * Place string at the end of the history list. The associated data field (if any) is set to NULL.
   */
+void add_history(const char *string) {
+    // return void!
+}
+
+/*
+ * void add_history_time (const char *string)
+ * Change the time stamp associated with the most recent history entry to string.
+ */
+void add_history_time (const char *string) {
+    // return void;
+}
+
+/*
+ * HIST_ENTRY * remove_history (int which)
+ * Remove  history entry at offset which from the history.  
+ * The removed element is returned so you can free the line,
+ * data, and containing structure.
+ */
+HIST_ENTRY * remove_history (int which) {
+    HIST_ENTRY *hep;
+    return hep; // dummy value
+}
+
+/*
+ * histdata_t free_history_entry (HIST_ENTRY *histent)
+ * Free the history entry histent and any history library private data associated with it.
+ * Returns the  application-specific data so the caller can dispose of it.
+ */
+histdata_t free_history_entry (HIST_ENTRY *histent) {
+    histdata_t hdt;
+    return hdt;  // dummy
+}
+
+/*
+ * HIST_ENTRY * replace_history_entry (int which, const char *line, histdata_t data)
+ * Make  the  history entry at offset which have line and data.  
+ * This returns the old entry so the caller can dispose of any application-specific data.
+ * In the case of an invalid which, a NULL pointer is returned.
+ */
+HIST_ENTRY * replace_history_entry (int which, const char *line, histdata_t data) {
+    HIST_ENTRY *hep;
+    return hep;  // Dummy value
+}
+
+
+/*
+ * void clear_history (void)
+ * Clear the history list by deleting all the entries.
+ */
+void clear_history (void) {
+    // return void
+}
+
+/*
+ * void stifle_history (int max)
+ * Stifle the history list, remembering only the last max entries.
+ */
+
+
+/*
+ *int unstifle_history (void)
+ * Stop stifling the history.  
+ * This returns the previously-set maximum number of history  entries  
+ * (as  set  by  stifle_history()).  
+ * history was stifled.  
+ * The value is positive if the history was stifled, negative if it wasn't.
+ */
+
 
 /*
  * Searching the History List SECTION:
