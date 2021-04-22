@@ -7,5 +7,12 @@ https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-command
 https://www.gnu.org/software/bash/manual/html_node/Bash-History-Builtins.html
 
 manpages
+__________
 
+
+open
+append
+close
+
+if type history, print w/#s in front ofthe commands, and then close the 
 */
