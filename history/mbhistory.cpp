@@ -38,7 +38,9 @@
 /*
  * What include statements do we need?
  */
+#include <ios>
 #include<iostream>      // for input/output capability
+#include <iterator>
 #include<string>        // for working with strings from user input and text file read input
 #include<fstream>       // for working with files
 using namespace std;    // for simpler code
@@ -52,17 +54,42 @@ void history(void);  // this is the function that the main() function calls.
 // Driver method
 int main(int argc, char *argv[]) {
 
+    // store the command just received to history;
+
+    // get the index of the last command in the history file
+    // https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
     // open the file.
-    
-    // get the most recent instruction, that is, most recent user input.
+    unsigned int numberOfLines = 0;
+    FILE * historyFile;
+    historyFile = fopen("historyFile.txt", "a+");
+    int ch;
+    // count newline characters
+    while (EOF != (ch = getc(historyFile))) {
+        if ('\n' == ch){
+            ++numberOfLines;
+        }
+    }
+    // increment by one to get the correct number.
+    ++numberOfLines;
 
     // get the information associated with the most recent user input.
+    // to do the above first get the line number and append it to the end.
+    // we just did a ./mbhistory command, so increment plus one again.
+    ++numberOfLines;
 
-    // append the most recent user input to the end of the file with associated data.
+    // append the integer index to the file
+    fprintf(historyFile, "\n%u ", numberOfLines);
+
+    // get the most recent instruction, that is, most recent user input.
+    // That would be the name of the executable just called, ./mbhistory
+
+    // close the file now that we have written to it
     
     // read the file "historyFile.txt."
 
     // write the entire contents of the file to the terminal
+    
+    return 0;
 
 }
 
