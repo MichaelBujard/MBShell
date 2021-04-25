@@ -1,9 +1,9 @@
 /*
  * the history list is an array of history entries. A history entry is declared as follows,
  * according to the manual "man history":
- * We don't need the data structure as provided in the manpage, because our implementation of the 
+ * We don't need the data structure as provided in the manpage, because our implementation of the
  * history list is more simple.
- * What the program does is, 
+ * What the program does is,
  * when the user types "./mbhistory" or whatever the executable file ends up being called,
  * the file executes the "history()" function,
  * which is defined in the mbhistory.cpp file.
@@ -15,12 +15,12 @@
  * 3. read from historyFile.txt
  * 4. print the contents of historyFile.txt out onto the "terminal window" (what is this called,
  * a console?)
- * 
+ *
  * 4. close the file.
- * 
+ *
  * READ:
  * https://en.wikipedia.org/wiki/History_(command)
- * 
+ *
  * https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
  * https://www.gnu.org/software/bash/manual/html_node/Bash-History-Builtins.html
  * manpages
@@ -29,7 +29,7 @@
  * 2. append
  * 3. close
  *
- * if type history, print w/#s in front ofthe commands, and then close the 
+ * if type history, print w/#s in front ofthe commands, and then close the
  *
  * Note that no fork is needed for this particular function.
  */
@@ -50,6 +50,7 @@ using namespace std;    // for simpler code
  * forward declaration of functions
  */
 void history(void);  // this is the function that the main() function calls.
+long int getSize(char filename[]);
 
 
 // Driver method
@@ -93,12 +94,37 @@ int main(int argc, char *argv[]) {
         printf ("%c", c);
         c = fgetc(historyFile);
     }
-    
+
     // close the file now that we have written to it
     fclose(historyFile);
 
     return 0;
 
+}
+
+long int getSize(char filename[]) {
+  // open file for reading
+  FILE *fp = fopen(filename, "r");
+
+  // check if the file exists...just in case!
+  if (fp == NULL) {
+    printf("History Library not found!\n");
+    return -1;
+  }
+
+  fseek(fp, 0L, SEEK_END);
+
+  // get the size of the file TODO: FInish:
+
+  /*
+  URLs:
+  https://www.geeksforgeeks.org/basics-file-handling-c/
+  https://stackoverflow.com/questions/8236/how-do-you-determine-the-size-of-a-file-in-c
+  https://www.geeksforgeeks.org/c-program-print-contents-file/
+  https://www.geeksforgeeks.org/c-program-find-size-file/
+  https://www.tutorialspoint.com/c_standard_library/c_function_fseek.htm
+
+  */
 }
 
 // these seem to be the only two variables we will need.
@@ -115,6 +141,6 @@ The number of entries currently stored in the history list.
 */
 
 /*
- * The main method that this program uses, 
+ * The main method that this program uses,
  * void history()
  */
