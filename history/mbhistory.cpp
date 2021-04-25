@@ -38,6 +38,7 @@
 /*
  * What include statements do we need?
  */
+#include <cstdio>
 #include <ios>
 #include<iostream>      // for input/output capability
 #include <iterator>
@@ -79,12 +80,20 @@ int main(int argc, char *argv[]) {
         fprintf(historyFile, "%u ./mbhistory\n", numberOfLines);
     }
 
+    // get the size of the file
+    fseek(historyFile, 0L, SEEK_END);
+    unsigned long len = (unsigned long)ftell(historyFile);
+
     // read the file "historyFile.txt."
-
-
     // write the entire contents of the file to the terminal
+    // Read contents from file
+    char c = fgetc(historyFile);
+    while (c != EOF)
+    {
+        printf ("%c", c);
+        c = fgetc(historyFile);
+    }
     
-
     // close the file now that we have written to it
     fclose(historyFile);
 
