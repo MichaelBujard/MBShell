@@ -72,23 +72,22 @@ int main(int argc, char *argv[]) {
     // increment by one to get the correct number.
     ++numberOfLines;
 
-    // get the information associated with the most recent user input.
-    // to do the above first get the line number and append it to the end.
-    // we just did a ./mbhistory command, so increment plus one again.
-    ++numberOfLines;
+    if (numberOfLines > 1) {
+        // append the integer index to the file
+        fprintf(historyFile, "%u ./mbhistory\n", numberOfLines);
+    } else {
+        fprintf(historyFile, "%u ./mbhistory\n", numberOfLines);
+    }
 
-    // append the integer index to the file
-    fprintf(historyFile, "\n%u ", numberOfLines);
-
-    // get the most recent instruction, that is, most recent user input.
-    // That would be the name of the executable just called, ./mbhistory
-
-    // close the file now that we have written to it
-    
     // read the file "historyFile.txt."
+
 
     // write the entire contents of the file to the terminal
     
+
+    // close the file now that we have written to it
+    fclose(historyFile);
+
     return 0;
 
 }
