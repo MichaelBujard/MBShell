@@ -33,7 +33,7 @@ void mbShell::WaitFor(int pid){
   cout << "Process [" << gotpid << "] Finished..." << endl;
 }
 
-void mbShell::parse_and_execute(string c){
+void mbShell::parse_and_execute(string c){  // fill the argv array...parse
     int id = fork();
     if (id == 0){ // we are in the child process
         char* argv[10];
