@@ -37,7 +37,7 @@ void mbShell::parse_and_execute(string c){
     int id = fork();
     if (id == 0){ // we are in the child process
         char* argv[10];
-        argv[1] = NULL;
+        argv[1] = NULL; // better results in the execvp
         argv[0] = (char*)c.c_str();
         execvp(argv[0], argv);
     }
@@ -49,7 +49,13 @@ void mbShell::parse_and_execute(string c){
     if (c.compare("exit") == 0){
         exit(0);
     } else if (c.compare("ls") == 0){
-        cout << "execute ls." << endl;
+        cout << "run mbls executable" << endl;
+    } else if (c.compare("pwd") == 0){
+        cout << "run mbpwd executable" << endl;
+    } else if (c.compare("history") == 0){
+        cout << "run mbhistory executable" << endl;
+    } else if (c.compare("!") == 0){
+        cout << "run mbbang executable" << endl;
     }
     cout << "That sounds like a good idea." << endl;
 }
