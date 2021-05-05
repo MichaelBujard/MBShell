@@ -1,5 +1,6 @@
 #include "mbShell.h"
 
+#include <cstdio>
 #include <iterator>
 #include <string.h>
 #include <string>
@@ -9,6 +10,13 @@
 #include <algorithm>
 
 using namespace std;
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+* void updateHistoryFile(string c)                              *
+* User-defined function that takes the command as an argument,  *
+* and prints it to the historyFile.txt history file             *
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int updateHistoryFile(string c);
 
 int main(int argc, char* argv[]){
     mbShell ms;
@@ -23,53 +31,32 @@ void mbShell::execute(){
         // Here, put the command entered into the historyFile.txt history file.
 
         // enter the index of the file
-        int numLines = 0;
-        ifstream in("historyFile.txt");
-        std::string unused;
-        while ( std::getline(in, unused) )
-            ++numLines;
-        ++numLines;
-        cout << "numLines " << numLines << endl;
 
-        // instantiate file
-        std::ofstream ofs;
+        while(1){
+            if (updateHistoryFile(command) == 0)
+                break;
+            else {
+                perror("history");
+            }
+        }
 
-        // open file for writing
-        ofs.open("historyFile.txt", std::ofstream::out | std::ofstream::app);
-
-        // enter the command into the history file
-        ofs << numLines << " " << command << endl;
-        ofs.close();
         // TODO: try getline
         parse_and_execute(command);
     }
-}
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-* WaitFor(pid)                                                  *
-* Waits for foreground processes...based on Rochkind's waitfor  *
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-void mbShell::WaitFor(int pid){
-  int gotpid, status;
-
-  while (true){
-      gotpid = waitpid(pid, &status, 0);
-      if (gotpid == pid) break;
-  }
-  cout << "Process [" << gotpid << "] Finished..." << endl;
 }
 
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
 
     // is this parsing?
-    //if (c.compare("ls") == 0){
-    //    cout << "run mbls executable" << endl;
-    //} else if (c.compare("pwd") == 0){
-    //    cout << "run mbpwd executable" << endl;
-    //} else if (c.compare("history") == 0){
-    //    cout << "run mbhistory executable" << endl;
-    //} else if (c.compare("!") == 0){
-    //    cout << "run mbbang executable" << endl;
-    //} else 
+    if (c.compare("ls") == 0){
+        cout << "run mbls executable" << endl;
+    } else if (c.compare("pwd") == 0){
+        cout << "run mbpwd executable" << endl;
+    } else if (c.compare("history") == 0){
+        cout << "run mbhistory executable" << endl;
+    } else if (c.compare("!") == 0){
+        cout << "run mbbang executable" << endl;
+    } else 
     if (c.compare("exit") == 0){
         exit(0);
     }
@@ -103,4 +90,24 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         //WaitFor(id);
     }
     cout << "You entered a command." << endl;
+}
+
+int updateHistoryFile(string c) {
+    int numLines = 1;
+    ifstream in("historyFile.txt");
+    std::string unused;
+    while ( std::getline(in, unused) )
+        ++numLines;
+    cout << "numLines " << numLines << endl;
+
+    // instantiate file
+    std::ofstream ofs;
+
+    // open file for writing
+    ofs.open("historyFile.txt", std::ofstream::out | std::ofstream::app);
+
+    // enter the command into the history file
+    ofs << numLines << " " << c << endl;
+    ofs.close();
+    return 0;
 }

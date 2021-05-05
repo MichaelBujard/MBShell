@@ -1,24 +1,25 @@
-exit
-./mbhistory2 ./mbhistory
-exitlelolaexitexitexitexit./mbhistory
-ls
-hi
-for
-ls
-ls
-./mbhistory
+1 ./mbhistory
+2 ls
+3 ./mbhistory
+4 ./mbhistory
+5 ls
+6 ./mbshell
+7 ls
+8 exit
+9 ./mbhistory
 10 ./mbhistory
-exit
-exit
-exit
-14 hi
-15 ls
-16 pwd
-17 so
-18 ./mbhistory
+11 exit
+12 ls
+13 ./mbhistory
+14 ./mbhistory
+15 exit
+16 ls
+17 ./mbhistory
+18 exit
 19 ./mbhistory
-20 history
+20 ./mbshell
 21 exit
 22 exit
-23 exit
-24 exit
+23 ./mbhistory
+24 ls
+25 exit

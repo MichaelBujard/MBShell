@@ -24,75 +24,18 @@
 /*
  * What include statements do we need?
  */
-#include <cstdio>
-#include <ios>
-#include<iostream>      // for input/output capability
-#include <iterator>
-#include<string>        // for working with strings from user input and text file read input
-#include<fstream>       // for working with files
-using namespace std;    // for simpler code
+#include <iostream>
+#include <fstream>
+
+using namespace std;  // for simpler code
 
 // Driver method
-int main(int argc, char *argv[]) {
+int main()
+{
+    std::ifstream f("historyFile.txt");
 
-    // store the command just received to history;   
-    // open the file.
-    /*
-    FILE * historyFile;
-    historyFile = fopen("historyFile.txt", "a+");
-    */
-
-
-    // get the index of the last command in the history file
-    // https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
-    // to do the above, count newline characters
-
-    /*
-    int ch;
-    unsigned int numberOfLines = 0;
-    while (EOF != (ch = getc(historyFile))) {
-        if ('\n' == ch){
-            ++numberOfLines;
-        }
-    }
-    // increment by one to get the correct number.
-    ++numberOfLines;
-    */
-
-    /*
-    if (numberOfLines > 1) {
-        // append the integer index to the file
-        fprintf(historyFile, "%u ./mbhistory\n", numberOfLines);
-    } else {
-        fprintf(historyFile, "%u ./mbhistory\n", numberOfLines);
-    }
-    */
-
-    /*
-    // get the size of the file
-    fseek(historyFile, 0L, SEEK_END);
-    unsigned long len = (unsigned long)ftell(historyFile);
-    */
-
-    // read the file "historyFile.txt."
-    // write the entire contents of the file to the terminal
-    // TODO: get this function to work
-    // Read contents from file
-    /*
-    char c = fgetc(historyFile);
-    while (c != EOF)
-    {
-        printf ("%c", c);
-        c = fgetc(historyFile);
-    }
-    */
-
-    // close the file now that we have written to it
-    // and read from it
-    /*
-    fclose(historyFile);
-    */
-
+    if (f.is_open())
+        std::cout << f.rdbuf();
+        
     return 0;
-
 }
