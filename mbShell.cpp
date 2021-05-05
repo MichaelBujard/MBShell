@@ -20,9 +20,10 @@ void mbShell::execute(){
         cin >> command;
 
         // Here, put the command into the historyFile.txt
-        std::ofstream app("historyFile.txt");
-        app << command << endl;
-        app.close();
+        std::ofstream out("historyFile.txt");
+        out << command << endl;
+        out.close();
+        // TODO: try getline
         parse_and_execute(command);
     }
 }
