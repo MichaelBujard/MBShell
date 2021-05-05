@@ -23,3 +23,9 @@
 23 ./mbhistory
 24 ls
 25 exit
+26 ./mbhistoryr
+27 ./mbhistory
+28 !
+29 exit
+30 exit
+31 exit

@@ -32,11 +32,14 @@ void mbShell::execute(){
 
         // enter the index of the file
 
+        // this while loop allows them to wait until the 
+        // history file updates before executing
         while(1){
             if (updateHistoryFile(command) == 0)
                 break;
             else {
                 perror("history");
+                break;
             }
         }
 
