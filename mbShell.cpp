@@ -3,6 +3,9 @@
 #include <string.h>
 #include <string>
 #include <sys/wait.h>
+#include <fstream>
+
+//#define MAXCOMMAND 10 // Max number of letters in a command to be supported
 
 using namespace std;
 
@@ -16,6 +19,10 @@ void mbShell::execute(){
         cout << greeting;
         cin >> command;
 
+        // Here, put the command into the historyFile.txt
+        std::ofstream app("historyFile.txt");
+        app << command << endl;
+        app.close();
         parse_and_execute(command);
     }
 }
@@ -46,9 +53,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse
         WaitFor(id);
     }
 
-    if (c.compare("exit") == 0){
-        exit(0);
-    } else if (c.compare("ls") == 0){
+    if (c.compare("ls") == 0){
         cout << "run mbls executable" << endl;
     } else if (c.compare("pwd") == 0){
         cout << "run mbpwd executable" << endl;
@@ -56,6 +61,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse
         cout << "run mbhistory executable" << endl;
     } else if (c.compare("!") == 0){
         cout << "run mbbang executable" << endl;
+    } else if (c.compare("exit") == 0){
+        exit(0);
     }
     cout << "That sounds like a good idea." << endl;
 }
