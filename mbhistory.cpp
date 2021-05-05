@@ -57,15 +57,17 @@ long int getSize(char filename[]);
 int main(int argc, char *argv[]) {
 
     // store the command just received to history;
-
     // get the index of the last command in the history file
     // https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
+    
     // open the file.
-    unsigned int numberOfLines = 0;
     FILE * historyFile;
     historyFile = fopen("historyFile.txt", "a+");
-    int ch;
+
+
     // count newline characters
+    int ch;
+    unsigned int numberOfLines = 0;
     while (EOF != (ch = getc(historyFile))) {
         if ('\n' == ch){
             ++numberOfLines;
@@ -102,6 +104,18 @@ int main(int argc, char *argv[]) {
 
 }
 
+/*
+URLs:
+https://www.geeksforgeeks.org/basics-file-handling-c/
+https://stackoverflow.com/questions/8236/how-do-you-determine-the-size-of-a-file-in-c
+https://www.geeksforgeeks.org/c-program-print-contents-file/
+https://www.geeksforgeeks.org/c-program-find-size-file/
+https://www.tutorialspoint.com/c_standard_library/c_function_fseek.htm
+
+*/
+
+/*
+// we don't seem to need this function anymore.
 long int getSize(char filename[]) {
   // open file for reading
   FILE *fp = fopen(filename, "r");
@@ -116,16 +130,8 @@ long int getSize(char filename[]) {
 
   // get the size of the file TODO: FInish:
 
-  /*
-  URLs:
-  https://www.geeksforgeeks.org/basics-file-handling-c/
-  https://stackoverflow.com/questions/8236/how-do-you-determine-the-size-of-a-file-in-c
-  https://www.geeksforgeeks.org/c-program-print-contents-file/
-  https://www.geeksforgeeks.org/c-program-find-size-file/
-  https://www.tutorialspoint.com/c_standard_library/c_function_fseek.htm
-
-  */
 }
+*/
 
 // these seem to be the only two variables we will need.
 

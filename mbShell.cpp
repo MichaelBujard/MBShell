@@ -3,6 +3,7 @@
 #include <string.h>
 #include <string>
 #include <sys/wait.h>
+#include <sys/types.h>
 #include <fstream>
 
 //#define MAXCOMMAND 10 // Max number of letters in a command to be supported
@@ -41,29 +42,49 @@ void mbShell::WaitFor(int pid){
   cout << "Process [" << gotpid << "] Finished..." << endl;
 }
 
-void mbShell::parse_and_execute(string c){  // fill the argv array...parse
-    int id = fork();
-    if (id == 0){ // we are in the child process
-        char* argv[10];
-        argv[1] = NULL; // better results in the execvp
+void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
+
+    // is this parsing?
+    //if (c.compare("ls") == 0){
+    //    cout << "run mbls executable" << endl;
+    //} else if (c.compare("pwd") == 0){
+    //    cout << "run mbpwd executable" << endl;
+    //} else if (c.compare("history") == 0){
+    //    cout << "run mbhistory executable" << endl;
+    //} else if (c.compare("!") == 0){
+    //    cout << "run mbbang executable" << endl;
+    //} else 
+    if (c.compare("exit") == 0){
+        exit(0);
+    }
+
+    int pid = fork();
+    if (pid == -1){
+        perror("fork");
+    }    
+    if (pid == 0){ 
+
+        // we are in the child process
+        cout << "child" << pid << endl;     
+
+        char* argv[10]; // program accepts no more than 10 command line arguments
+
+        // does the child parse here, or lines 47-58?        
         argv[0] = (char*)c.c_str();
-        execvp(argv[0], argv);
+        argv[1] = NULL; // must have this at the end of the command. Returns better results
+           
+        // child executes here
+        if (execvp(argv[0], argv) == -1){
+            perror("exec");
+        }
     }
     else {
         // Here we are in the parent
-        WaitFor(id);
+        if (wait(0) == -1){
+            perror("wait");
+        }
+        cout << "parent" << pid << endl;
+        //WaitFor(id);
     }
-
-    if (c.compare("ls") == 0){
-        cout << "run mbls executable" << endl;
-    } else if (c.compare("pwd") == 0){
-        cout << "run mbpwd executable" << endl;
-    } else if (c.compare("history") == 0){
-        cout << "run mbhistory executable" << endl;
-    } else if (c.compare("!") == 0){
-        cout << "run mbbang executable" << endl;
-    } else if (c.compare("exit") == 0){
-        exit(0);
-    }
-    cout << "That sounds like a good idea." << endl;
+    cout << "You entered a command." << endl;
 }
