@@ -1,1 +1,24 @@
 exit
+./mbhistory2 ./mbhistory
+exitlelolaexitexitexitexit./mbhistory
+ls
+hi
+for
+ls
+ls
+./mbhistory
+10 ./mbhistory
+exit
+exit
+exit
+14 hi
+15 ls
+16 pwd
+17 so
+18 ./mbhistory
+19 ./mbhistory
+20 history
+21 exit
+22 exit
+23 exit
+24 exit

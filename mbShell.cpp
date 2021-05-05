@@ -1,12 +1,12 @@
 #include "mbShell.h"
 
+#include <iterator>
 #include <string.h>
 #include <string>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <fstream>
-
-//#define MAXCOMMAND 10 // Max number of letters in a command to be supported
+#include <algorithm>
 
 using namespace std;
 
@@ -20,10 +20,26 @@ void mbShell::execute(){
         cout << greeting;
         cin >> command;
 
-        // Here, put the command into the historyFile.txt
-        std::ofstream out("historyFile.txt");
-        out << command << endl;
-        out.close();
+        // Here, put the command entered into the historyFile.txt history file.
+
+        // enter the index of the file
+        int numLines = 0;
+        ifstream in("historyFile.txt");
+        std::string unused;
+        while ( std::getline(in, unused) )
+            ++numLines;
+        ++numLines;
+        cout << "numLines " << numLines << endl;
+
+        // instantiate file
+        std::ofstream ofs;
+
+        // open file for writing
+        ofs.open("historyFile.txt", std::ofstream::out | std::ofstream::app);
+
+        // enter the command into the history file
+        ofs << numLines << " " << command << endl;
+        ofs.close();
         // TODO: try getline
         parse_and_execute(command);
     }
