@@ -1,20 +1,10 @@
 /*
- * the history list is an array of history entries. A history entry is declared as follows,
- * according to the manual "man history":
- * What the program does is,
- * when the user types "./mbhistory" or whatever the executable file ends up being called,
- * the file executes the "history()" function,
- * which is defined in the mbhistory.cpp file.
- * This history() function has the following description:
- *
  * 1. open historyFile.txt
  * 2. Append the most recent instruction,
  *    the instruction that just executed, to "historyFile.txt"
  * 3. read from historyFile.txt
- * 4. print the contents of historyFile.txt out onto the "terminal window" (what is this called,
- * a console?)
- *
- * 4. close the file.
+ * 4. print the contents of historyFile.txt to CLI
+ * 5. close the file historyFile.txt.
  *
  * READ:
  * https://en.wikipedia.org/wiki/History_(command)
@@ -24,12 +14,12 @@
  * manpages
  * The function does these three things:
  * 1. open
- * 2. append
- * 3. close
+ * 2. append 
+ * 3. read
+ * 4. print
+ * 5. close
  *
- * if type history, print w/#s in front ofthe commands, and then close the
- *
- * Note that no fork is needed for this particular function.
+ * if user types "./mbhistory", print the line number before each command, and then close the file
  */
 
 
