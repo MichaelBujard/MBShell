@@ -1,8 +1,6 @@
 /*
  * the history list is an array of history entries. A history entry is declared as follows,
  * according to the manual "man history":
- * We don't need the data structure as provided in the manpage, because our implementation of the
- * history list is more simple.
  * What the program does is,
  * when the user types "./mbhistory" or whatever the executable file ends up being called,
  * the file executes the "history()" function,
@@ -48,6 +46,7 @@ using namespace std;    // for simpler code
 
 /*
  * forward declaration of functions
+ * we never ended up using these...consider removing 
  */
 void history(void);  // this is the function that the main() function calls.
 long int getSize(char filename[]);
@@ -56,16 +55,15 @@ long int getSize(char filename[]);
 // Driver method
 int main(int argc, char *argv[]) {
 
-    // store the command just received to history;
-    // get the index of the last command in the history file
-    // https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
-    
+    // store the command just received to history;   
     // open the file.
     FILE * historyFile;
     historyFile = fopen("historyFile.txt", "a+");
 
 
-    // count newline characters
+    // get the index of the last command in the history file
+    // https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
+    // to do the above, count newline characters
     int ch;
     unsigned int numberOfLines = 0;
     while (EOF != (ch = getc(historyFile))) {
@@ -89,15 +87,19 @@ int main(int argc, char *argv[]) {
 
     // read the file "historyFile.txt."
     // write the entire contents of the file to the terminal
+    // TODO: get this function to work
     // Read contents from file
+    /*
     char c = fgetc(historyFile);
     while (c != EOF)
     {
         printf ("%c", c);
         c = fgetc(historyFile);
     }
+    */
 
     // close the file now that we have written to it
+    // and read from it
     fclose(historyFile);
 
     return 0;
