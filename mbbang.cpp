@@ -23,11 +23,33 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
 // Driver method
-int main() {
+int main(int argc, char *argv[]) {
 
+    // open the history file for reading
+    ifstream inFile("historyFile.txt");
+
+    // line-based parsing, using streams from sstring and string libraries
+    string line;
+    while (getline(inFile, line)){
+
+        istringstream iss(line);
+        int histCommIdx;  // the line number of the history file
+        string histCommand = line;  // everything after lineNumber and the following space
+        iss >> histCommIdx;
+
+        string::size_type n = 0;
+        n = histCommand.find_first_not_of( " \t", n );
+        n = histCommand.find_first_of( " \t", n );
+        histCommand.erase( 0,  histCommand.find_first_not_of( " \t", n ) );
+
+        cout << "The command at " << histCommIdx << " is : " << histCommand << "\n";
+    }
+    
+    return 0;
 }
 
