@@ -328,3 +328,72 @@
 328 test one two 
 329 ls -l -h -a
 330 ls
+331 ls
+332 exit
+333 ls
+334 exit
+335 exit
+336 parse small elephants det dog ban
+337 parse small elephants det dog ban
+338 hi there this is a command
+339 ls
+340 this is a command
+341 this is a command
+342 ls -l -h -a
+343 ls -l -h -a
+344 ls -l -h -a
+345 ls -l -h -a
+346 ls
+347 exit
+348 ls -l -h -a
+349 ls -l -h -a
+350 ./mbshell
+351 exit
+352 ls -l -h -a
+353 ls -l -h -a
+354 ls -l -h -a
+355 ls -l -h -a
+356 ls -l -h -a
+357 ls -l -h -a
+358 ls -l -h -a
+359 ls -l -h -a
+360 ls -l -h -a
+361 ls -l -h -a
+362 ls -l -h -a
+363 ls -l -h -a
+364 ls -l -h -a
+365 ls -l -h -a
+366 ps -aux
+367 du
+368 w
+369 history
+370 ./mbhistory
+371 exit
+372 exit
+373 ls -l -h -a
+374 ps -aux
+375 exit
+376 ls
+377 exit
+378 ls
+379 exit
+380 exit
+381 ls -l -h -a
+382 ls
+383 ls
+384 ls -l -h -a
+385 exit
+386 ./mbbang
+387 ./mbbang-1
+388 exit
+389 exit
+390 exit
+391 ./mbbang-1
+392 exit
+393 exit
+394 ./mbbang1
+395 exit
+396 exit
+397 ./mbbang-1
+398 exit
+399 exit

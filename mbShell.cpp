@@ -39,17 +39,26 @@ int main(int argc, char* argv[]){
 void mbShell::execute(){
     while (true){
         cout << greeting;
-        getline(cin, command);  
-        cout << "command is : " << command << "<" << endl;      
+        getline(cin, command);      
 
-        // Here, put the command entered into the historyFile.txt history file.
-        while(true){          // wait until the history file updates before executing 
-            if (updateHistoryFile(command) == 0)
+        // wait for history file to update before calling parse_and_execute()
+        while(true){ 
+            if (updateHistoryFile(command) == 0){
+                cout << "updated the history file" << endl;
                 break;
+            }
             else {
+                cout << "uh oh" << endl;
                 perror("history");
                 break;
             }
+        }
+
+        // does the command begin with a "bang"?
+        // checkIfBang
+        if (command.substr(0, 8).compare("./mbbang") == 0){
+            command.insert(8, " ");
+            cout << "./mbbang-1 should be split. It is: " << command << endl;
         }
 
         parse_and_execute(command);
@@ -59,13 +68,15 @@ void mbShell::execute(){
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
 
     char *cp = (char *)c.c_str();
+
     cout << "CP = " << cp << "<" << endl;
 
-    // Do we fill the argv array here?
-    char** argv = get_input(cp); // program accepts no more than 10 command line arguments
+    char **argv = get_input(cp); // program accepts no more than 10 command line arguments
+    
     cout << argv[0] << "---" << argv[1] << "---" << argv[2] << argv[3] << endl;
     // why is this not printing with command "ls"? What about
     cout << argv[0] << endl;
+
 
 
     if (c.compare("exit") == 0){
@@ -85,10 +96,9 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         // we are in the child process
         cout << "child: " << pid << endl;     
 
-       //strtok()    
         // child executes here
         if (execvp(argv[0], argv) == -1){
-            
+
             cout << "exec failed here" << endl;
             perror("exec");
         }
@@ -99,7 +109,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
             perror("wait");
         }
         cout << "parent: " << pid << endl;
-        //WaitFor(id);
+        
     }
     cout << "You entered a command." << endl;
 }
@@ -130,46 +140,28 @@ int updateHistoryFile(string c) {
  * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
  */
 char **get_input(char *input){
-    char **command = (char **)malloc(30 * sizeof(char *));
-    // what is 
-    // this might be problematic, because we never free the memory allocation...?
-    // or does it not matter, because this function's stack and data segment is discarded 
-    // after the function returns a value?
+
+    char **command = (char **)malloc(10 * sizeof(char *));  // allocate for 10 command line args
+
     char *separator = (char *)" ";
     char *parsed;
     int index = 0;
 
-
-    cout << "get_input function called" << endl;
-
     parsed = strtok(input, separator);
-    cout << "outside while loop of get_input, parsed is : " << parsed << endl;
+
     while (parsed != NULL){
-        cout << "command[index] = " << command[index] << endl;
-        command[index] = parsed;
-        cout << "command[index] after setting to parsed is : " << command[index] << endl;        
+
+        command[index] = (char*)malloc(80 * sizeof(char));
+        strcpy(command[index], parsed);  // make bunch of char pointer variables to do strcpy      
+        cout << "command[" << index << "] : " << command[index] << endl;
         index++;
-        cout << "waiting for more input: " << endl;
+
         parsed = strtok(NULL, separator);
-        cout << "parsed is : [" << parsed << "]" << endl;
-        // why is the end being weird? seg faults, and printing output.
+
     }
-
-    // debug char **command
-    // check out what command is for all its length...
-    #int i;
-    #for (i = 0; i < 30; i++){
-    #    if (i == 0){
-    #        cout << "[" << command[0] << endl;
-    #    } else if (i < 29 && i > 0){
-    #       cout << ", " << command[i];
-    #   } else if (i == 29){
-    #        cout << command[i] << "]" << endl;
-    #    }
-    #}
-
+    
     command[index] = NULL;
-    cout << command[0] << "---" << command[1] << "---" << command[index] << "---" << endl;
+    
     return command;
 
 }
