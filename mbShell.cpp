@@ -40,7 +40,8 @@ int main(int argc, char* argv[]){
 void mbShell::execute(){
     while (true){
         cout << greeting;
-        cin >> command;
+        getline(cin, command);  
+        cout << "command is : " << command << "<" << endl;      
 
         // Here, put the command entered into the historyFile.txt history file.
 
@@ -57,20 +58,18 @@ void mbShell::execute(){
             }
         }
 
-        // TODO: try getline
         parse_and_execute(command);
     }
 }
 
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
 
+    char *cp = (char *)c.c_str();
+    cout << "CP = " << cp << "<" << endl;
+
     // Do we fill the argv array here?
-    char* argv[10]; // program accepts no more than 10 command line arguments
-
-    // does the child parse here, or lines 47-58?        
-    argv[0] = (char*)c.c_str();
-    argv[1] = NULL; // must have this at the end of the command. Returns better results
-
+    char** argv = get_input(cp); // program accepts no more than 10 command line arguments
+    cout << argv[0] << "---" << argv[1] << "---" << argv[2] << endl;
 
 
     if (c.compare("exit") == 0){
@@ -133,7 +132,7 @@ int updateHistoryFile(string c) {
  * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
  */
 char **get_input(char *input){
-    char **command = (char **)malloc(8 * sizeof(char *));
+    char **command = (char **)malloc(30 * sizeof(char *));
     char *separator = (char *)" ";
     char *parsed;
     int index = 0;
@@ -142,7 +141,7 @@ char **get_input(char *input){
     while (parsed != NULL){
         command[index] = parsed;
         index++;
-
+        cout << "waiting for more input: " << endl;
         parsed = strtok(NULL, separator);
     }
 

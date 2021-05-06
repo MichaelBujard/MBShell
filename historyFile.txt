@@ -44,3 +44,119 @@
 44 ./mbhistory
 45 exit
 46 exit
+47 ls
+48 cd
+49 du
+50 pwd
+51 w
+52 ./mbhistory
+53 ls
+54 exit
+55 we
+56 serve
+57 ls
+58 -l
+59 ls
+60 exit
+61 exit
+62 ls
+63 ls
+64 ls
+65 ls
+66 exit
+67 serve
+68 exit
+69 exit
+70 apple
+71 baseball
+72 cat
+73 apple
+74 baseball
+75 cat
+76 apple baseball cat dog elephant
+77 ls
+78 cd
+79 asd we
+80 ls
+81 ls
+82 exit
+83 exit
+84 exit
+85 exit
+86 ls
+87 exit
+88 ls
+89 exit
+90 ls
+
+92 exit
+93 exit
+94 a really really long elephant swings lorem ipsum more lorem ipsum scelerens parser definitive
+95 ls
+96 a really really long ipsum lorem parser definitive smells like jovial soliloquy
+97 unknown
+98 we
+99 write
+100 exit
+101 exit
+102 exit
+103 exit
+104 exit
+105 ls
+106 w
+107 joins
+108 exit
+109 exit
+110 joe
+111 k
+112 e
+113 q
+114 jhgfds
+115 hgfd jhgfd jhgfd jhgfd jhgfd jhgbvfcd jhgfd jhbgvfcd jnhbgvfcd xhbgvfcd xnhbvc xnb vcx
+116 
+117 
+118 
+119 
+120 
+121 hgfds hgfd ghfd hgfd hgfd ghfd sgfd gfd hgfd ghfd gfd sgfd sgf dsgfds gfd sgfd sgfd sgfvd sgvfd sgfd sgfvd sgfvd sdvfcdx svfd gvfcds vgfcds gfd gfds gvfds gfds gvfds gfds gfds gfds gfds gvfds gvfds gvfvd sgfds fds fds gfds gfds gfds gfds gfds fds gfds gfds
+122 
+123 
+124 
+125 fds
+126 fds
+127 gfds
+128 gtfrdesw
+129 hgfdsa
+130 jhgfdsa
+131 jhgfdsa
+132 jhgfdsa
+133 jhgfdsa
+134 hgfdsa
+135 hgfds
+136 ajhgfdsa
+137 hgfdsa
+138 hgfds
+139 ls
+140 james
+141 Where are you?
+142 How are you?
+143 Who are you/?
+144 frds
+145 f
+146 w
+147 w
+148 w
+149 w
+150 w
+151 w
+152 exit
+153 exit
+154 exit
+155 exit
+156 exit
+157 exit
+158 exit
+159 exit
+160 exit
+161 exit
+162 exit
