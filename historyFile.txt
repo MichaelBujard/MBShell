@@ -323,3 +323,8 @@
 323 ls -l -h -a
 324 exit
 325 this is a really long string command
+326 this is a long string to test the commmand functionality of the shell
+327 this is a long
+328 test one two 
+329 ls -l -h -a
+330 ls

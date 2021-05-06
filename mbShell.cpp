@@ -131,6 +131,7 @@ int updateHistoryFile(string c) {
  */
 char **get_input(char *input){
     char **command = (char **)malloc(30 * sizeof(char *));
+    // what is 
     // this might be problematic, because we never free the memory allocation...?
     // or does it not matter, because this function's stack and data segment is discarded 
     // after the function returns a value?
@@ -151,8 +152,21 @@ char **get_input(char *input){
         cout << "waiting for more input: " << endl;
         parsed = strtok(NULL, separator);
         cout << "parsed is : [" << parsed << "]" << endl;
-        // why is the end 
+        // why is the end being weird? seg faults, and printing output.
     }
+
+    // debug char **command
+    // check out what command is for all its length...
+    #int i;
+    #for (i = 0; i < 30; i++){
+    #    if (i == 0){
+    #        cout << "[" << command[0] << endl;
+    #    } else if (i < 29 && i > 0){
+    #       cout << ", " << command[i];
+    #   } else if (i == 29){
+    #        cout << command[i] << "]" << endl;
+    #    }
+    #}
 
     command[index] = NULL;
     cout << command[0] << "---" << command[1] << "---" << command[index] << "---" << endl;
