@@ -160,3 +160,166 @@
 160 exit
 161 exit
 162 exit
+163 ls
+164 exit
+165 ls
+166 exit
+167 hi
+168 hi
+169 joe
+170 exit
+171 exit
+172 exit
+173 exit
+174 hi
+175 jo
+176 josh
+177 du
+178 w
+179 james
+180 exit
+181 exit
+182 exit
+183 exit
+184 exit
+185 pwd
+186 joe
+187 w
+188 ls -l
+189 ls -l -a
+190 ! -1
+191 !-1
+192 !-2
+193 !!
+194 !
+195 exit
+196 exit
+197 exit
+198 exit
+199 exit
+200 exit
+201 exit
+202 w
+203 du
+204 ls -l -a
+205 ./mbhistory
+206 exit
+207 !
+208 exit
+209 exit
+210 ls
+211 git hub
+212 git quit
+213 git logout
+214 git exit
+215 go lang
+216 iter ad joseph
+217 ls
+218 ls -l -a
+219 exit
+220 exit
+221 iter ad joseph
+222 exit
+223 exit
+224 iter ad Joseph
+225 exit
+226 exit
+227 iter ad joseph
+228 exit
+229 exit
+230 iter ad Joseph
+231 exit
+232 exit
+233 ls
+234 iter ad joseph
+235 ls
+236 ls
+237 ./mbhistory
+238 history
+239 exit
+240 exit
+241 exit
+242 ls
+243 ls
+244 exit
+245 ls
+246 exit
+247 ls
+248 s
+249 h
+250 e
+251 l
+252 l
+253 l
+254 a
+255 b
+256 c
+257 d
+258 e
+259 f
+260 g
+261 h
+262 i
+263 j
+264 k
+265 l
+266 m
+267 n
+268 o
+269 p
+270 q
+271 w
+272 e
+273 w
+274 w
+275 w
+276 w
+277 w
+278 w
+279 w
+280 w
+281 s
+282 t
+283 u
+284 v
+285 x
+286 y
+287 z
+288 exit
+289 exit
+290 exit
+291 exit
+292 exit
+293 exit
+294 exit
+295 exit
+296 exit
+297 exit
+298 exit
+299 exit
+300 exit
+301 exit
+302 exit
+303 exit
+304 exit
+305 ls
+306 exit
+307 exit
+308 exit
+309 exit
+310 exit
+311 ls
+312 ls
+313 ls
+314 ls
+315 ls
+316 ls
+317 ls
+318 ls
+319 sl
+320 ls
+321 exit
+322 exit
+323 ls -l -h -a
+324 exit
+325 this is a really long string command

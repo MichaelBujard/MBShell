@@ -2,7 +2,6 @@
 
 #include <cstdio>
 #include <iterator>
-#include <string.h>
 #include <string>
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -44,12 +43,7 @@ void mbShell::execute(){
         cout << "command is : " << command << "<" << endl;      
 
         // Here, put the command entered into the historyFile.txt history file.
-
-        // enter the index of the file
-
-        // this while loop allows them to wait until the 
-        // history file updates before executing
-        while(true){
+        while(true){          // wait until the history file updates before executing 
             if (updateHistoryFile(command) == 0)
                 break;
             else {
@@ -69,7 +63,9 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     // Do we fill the argv array here?
     char** argv = get_input(cp); // program accepts no more than 10 command line arguments
-    cout << argv[0] << "---" << argv[1] << "---" << argv[2] << endl;
+    cout << argv[0] << "---" << argv[1] << "---" << argv[2] << argv[3] << endl;
+    // why is this not printing with command "ls"? What about
+    cout << argv[0] << endl;
 
 
     if (c.compare("exit") == 0){
@@ -92,6 +88,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
        //strtok()    
         // child executes here
         if (execvp(argv[0], argv) == -1){
+            
+            cout << "exec failed here" << endl;
             perror("exec");
         }
     }
@@ -133,19 +131,31 @@ int updateHistoryFile(string c) {
  */
 char **get_input(char *input){
     char **command = (char **)malloc(30 * sizeof(char *));
+    // this might be problematic, because we never free the memory allocation...?
+    // or does it not matter, because this function's stack and data segment is discarded 
+    // after the function returns a value?
     char *separator = (char *)" ";
     char *parsed;
     int index = 0;
 
+
+    cout << "get_input function called" << endl;
+
     parsed = strtok(input, separator);
+    cout << "outside while loop of get_input, parsed is : " << parsed << endl;
     while (parsed != NULL){
+        cout << "command[index] = " << command[index] << endl;
         command[index] = parsed;
+        cout << "command[index] after setting to parsed is : " << command[index] << endl;        
         index++;
         cout << "waiting for more input: " << endl;
         parsed = strtok(NULL, separator);
+        cout << "parsed is : [" << parsed << "]" << endl;
+        // why is the end 
     }
 
     command[index] = NULL;
+    cout << command[0] << "---" << command[1] << "---" << command[index] << "---" << endl;
     return command;
 
 }

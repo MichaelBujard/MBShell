@@ -27,11 +27,10 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;  // for simpler code
+using namespace std;
 
 // Driver method
-int main()
-{
+int main(){
     std::ifstream f("historyFile.txt");
 
     if (f.is_open())
