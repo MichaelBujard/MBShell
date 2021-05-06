@@ -2,6 +2,7 @@
 #include <string>       
 #include <sys/types.h>
 #include <unistd.h>
+#include <vector>
 
 using namespace std;
 
@@ -9,8 +10,6 @@ class mbShell {
 private:
 
 public: 
-    // History
-    //string history[];
 
     string greeting = "Hi there > ";
     string command;
@@ -21,5 +20,5 @@ public:
     // Helper Functions
     void parse_and_execute(string c);
 
-    void WaitFor(int pid);
+    //void WaitFor(int pid);
 };
