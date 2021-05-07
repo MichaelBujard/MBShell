@@ -1,598 +1,79 @@
 1 ls
-2 cd
-3 ls
-4 ./mbhistory
-5 ls
-6 cd
-7 ./mbhistory
-8 ls
-9 history
-10 man
-11 history
-12 ls
-13 ps
-14 du
-15 ls
-16 -l
-17 exit
-18 exit
-19 ls
+2 pwd
+3 ls -l
+4 ls -l -h -a
+5 ps -aux
+6 du
+7 ps -aux
+8 ps -aux
+9 du
+10 du
+11 pwd
+12 du
+13 du
+14 ls -l
+15 du
+16 ls -l
+17 du
+18 ls -l
+19 du
 20 du
-21 ./mbhistory
-22 exit
-23 exit
-24 ls
-25 ls
+21 ls -l
+22 ls -l
+23 ls -l
+24 ls -l
+25 pwd
 26 ls
-27 ls
-28 exit
-29 exit
-30 ls
+27 pwd
+28 ls
+29 ls -l
+30 du
 31 ls
-32 ls
-33 ls
-34 ls
-35 ls
+32 pwd
+33 history
+34 !
+35 ls -l
 36 ls
 37 ls
-38 ls
-39 exit
-40 pwd
-41 ls
-42 du
-43 history
-44 ./mbhistory
-45 exit
-46 exit
-47 ls
-48 cd
-49 du
-50 pwd
-51 w
-52 ./mbhistory
-53 ls
-54 exit
-55 we
-56 serve
-57 ls
-58 -l
-59 ls
-60 exit
-61 exit
-62 ls
-63 ls
+38 history
+39 1-1
+40 1-1
+41 history
+42 pwd
+43 ps -aux
+44 ps -aux
+45 history
+46 !
+47 !
+48 ls
+49 ls -l -h -a
+50 history
+51 history
+52 ls
+53 exit 
+54 history
+55 history
+56 history
+57 exit 
+58 history
+59 ls -l -h -a
+60 ls -l -h -a
+61 ls -l
+62 ps -aux
+63 du
 64 ls
-65 ls
-66 exit
-67 serve
-68 exit
-69 exit
-70 apple
-71 baseball
-72 cat
-73 apple
-74 baseball
-75 cat
-76 apple baseball cat dog elephant
-77 ls
-78 cd
-79 asd we
-80 ls
-81 ls
-82 exit
-83 exit
-84 exit
-85 exit
-86 ls
-87 exit
-88 ls
-89 exit
-90 ls
-
-92 exit
-93 exit
-94 a really really long elephant swings lorem ipsum more lorem ipsum scelerens parser definitive
-95 ls
-96 a really really long ipsum lorem parser definitive smells like jovial soliloquy
-97 unknown
-98 we
-99 write
-100 exit
-101 exit
-102 exit
-103 exit
-104 exit
-105 ls
-106 w
-107 joins
-108 exit
-109 exit
-110 joe
-111 k
-112 e
-113 q
-114 jhgfds
-115 hgfd jhgfd jhgfd jhgfd jhgfd jhgbvfcd jhgfd jhbgvfcd jnhbgvfcd xhbgvfcd xnhbvc xnb vcx
-116 
-117 
-118 
-119 
-120 
-121 hgfds hgfd ghfd hgfd hgfd ghfd sgfd gfd hgfd ghfd gfd sgfd sgf dsgfds gfd sgfd sgfd sgfvd sgvfd sgfd sgfvd sgfvd sdvfcdx svfd gvfcds vgfcds gfd gfds gvfds gfds gvfds gfds gfds gfds gfds gvfds gvfds gvfvd sgfds fds fds gfds gfds gfds gfds gfds fds gfds gfds
-122 
-123 
-124 
-125 fds
-126 fds
-127 gfds
-128 gtfrdesw
-129 hgfdsa
-130 jhgfdsa
-131 jhgfdsa
-132 jhgfdsa
-133 jhgfdsa
-134 hgfdsa
-135 hgfds
-136 ajhgfdsa
-137 hgfdsa
-138 hgfds
-139 ls
-140 james
-141 Where are you?
-142 How are you?
-143 Who are you/?
-144 frds
-145 f
-146 w
-147 w
-148 w
-149 w
-150 w
-151 w
-152 exit
-153 exit
-154 exit
-155 exit
-156 exit
-157 exit
-158 exit
-159 exit
-160 exit
-161 exit
-162 exit
-163 ls
-164 exit
-165 ls
-166 exit
-167 hi
-168 hi
-169 joe
-170 exit
-171 exit
-172 exit
-173 exit
-174 hi
-175 jo
-176 josh
-177 du
-178 w
-179 james
-180 exit
-181 exit
-182 exit
-183 exit
-184 exit
-185 pwd
-186 joe
-187 w
-188 ls -l
-189 ls -l -a
-190 ! -1
-191 !-1
-192 !-2
-193 !!
-194 !
-195 exit
-196 exit
-197 exit
-198 exit
-199 exit
-200 exit
-201 exit
-202 w
-203 du
-204 ls -l -a
-205 ./mbhistory
-206 exit
-207 !
-208 exit
-209 exit
-210 ls
-211 git hub
-212 git quit
-213 git logout
-214 git exit
-215 go lang
-216 iter ad joseph
-217 ls
-218 ls -l -a
-219 exit
-220 exit
-221 iter ad joseph
-222 exit
-223 exit
-224 iter ad Joseph
-225 exit
-226 exit
-227 iter ad joseph
-228 exit
-229 exit
-230 iter ad Joseph
-231 exit
-232 exit
-233 ls
-234 iter ad joseph
-235 ls
-236 ls
-237 ./mbhistory
-238 history
-239 exit
-240 exit
-241 exit
-242 ls
-243 ls
-244 exit
-245 ls
-246 exit
-247 ls
-248 s
-249 h
-250 e
-251 l
-252 l
-253 l
-254 a
-255 b
-256 c
-257 d
-258 e
-259 f
-260 g
-261 h
-262 i
-263 j
-264 k
-265 l
-266 m
-267 n
-268 o
-269 p
-270 q
-271 w
-272 e
-273 w
-274 w
-275 w
-276 w
-277 w
-278 w
-279 w
-280 w
-281 s
-282 t
-283 u
-284 v
-285 x
-286 y
-287 z
-288 exit
-289 exit
-290 exit
-291 exit
-292 exit
-293 exit
-294 exit
-295 exit
-296 exit
-297 exit
-298 exit
-299 exit
-300 exit
-301 exit
-302 exit
-303 exit
-304 exit
-305 ls
-306 exit
-307 exit
-308 exit
-309 exit
-310 exit
-311 ls
-312 ls
-313 ls
-314 ls
-315 ls
-316 ls
-317 ls
-318 ls
-319 sl
-320 ls
-321 exit
-322 exit
-323 ls -l -h -a
-324 exit
-325 this is a really long string command
-326 this is a long string to test the commmand functionality of the shell
-327 this is a long
-328 test one two 
-329 ls -l -h -a
-330 ls
-331 ls
-332 exit
-333 ls
-334 exit
-335 exit
-336 parse small elephants det dog ban
-337 parse small elephants det dog ban
-338 hi there this is a command
-339 ls
-340 this is a command
-341 this is a command
-342 ls -l -h -a
-343 ls -l -h -a
-344 ls -l -h -a
-345 ls -l -h -a
-346 ls
-347 exit
-348 ls -l -h -a
-349 ls -l -h -a
-350 ./mbshell
-351 exit
-352 ls -l -h -a
-353 ls -l -h -a
-354 ls -l -h -a
-355 ls -l -h -a
-356 ls -l -h -a
-357 ls -l -h -a
-358 ls -l -h -a
-359 ls -l -h -a
-360 ls -l -h -a
-361 ls -l -h -a
-362 ls -l -h -a
-363 ls -l -h -a
-364 ls -l -h -a
-365 ls -l -h -a
-366 ps -aux
-367 du
-368 w
-369 history
-370 ./mbhistory
-371 exit
-372 exit
-373 ls -l -h -a
-374 ps -aux
-375 exit
-376 ls
-377 exit
-378 ls
-379 exit
-380 exit
-381 ls -l -h -a
-382 ls
-383 ls
-384 ls -l -h -a
-385 exit
-386 ./mbbang
-387 ./mbbang-1
-388 exit
-389 exit
-390 exit
-391 ./mbbang-1
-392 exit
-393 exit
-394 ./mbbang1
-395 exit
-396 exit
-397 ./mbbang-1
-398 exit
-399 exit
-400 hi there
-401 ls
-402 pwd
-403 du
-404 w
-405 ls -l -h -a
-406 !
-407 !-1
-408 !-2
-409 !-4
-410 !
-411 !!
-412 !!
-413 ls
-414 ./mbhistory
-415 ls -l -h -a
-416 exit
-417 ./mbbang
-418 exit
-419 ./mbbang
-420 ./mbbang
-421 ./mbbang21
-422 exit
-423 ./mbhistory
-424 ./mbbang
-425 exit
-426 ls -l -h -a
-427 exit
-428 ls
-429 ls
-430 ls
-431 ls -l -h -a
-432 du
-433 pwd
-434 exit
-435 ./mbhistory
-436 ./mbbang-1
-437 ./mbbang
-438 ./exit
-439 exit
-440 exit
-441 exit
-442 ls -l -h -a
-443 ls
-444 ./mbhistory
-445 ./mbbang
-446 ./mbbang-1
-447 exit
-448 exit
-449 ls -l -h -a
-450 ls
-451 exit
-452 ls
-453 l
-454 james
-455 joseph
-456 Jude
-457 ./mbhistory
-458 ./mbbang
-459 ./mbbang-1
-460 exit
-461 exit
-462 exit
-463 exit
-464 exit
-465 ls
-466 exit
-467 exit
-468 ls -l -h -a
-469 exit
-470 exit
-471 ls -l -h -a
-472 ls
-473 du
-474 cwd
-475 exit
-476 exit
-477 ./mbhistory
-478 ls
-479 history
-480 ./mbhistory
-481 ls
-482 ./history
-483 ./mbhistory
-484 history
-485 ./mbhistoryt
-486 !17
-487 ./mbbang
-488 ./mbbang 30
-489 exit
-490 exit
-491 exit
-492 exit
-493 exit
-494 exit
-495 ./mbbang12
-496 ./mbbang-1
-497 ./mbbang-1
-498 exit
-499 ./mbbang-1
-500 mbbang0
-501 exit
-502 exit
-503 ./mbbang17
-504 ./mbbang0
-505 exit
-506 ./mbbang0
-507 ./mbbang-1
-508 ./mbbang2
-509 ./mbbang3
-510 ./mbbang1
-511 exit
-512 ./mbbang17
-513 exit
-514 ls
-515 exit
-516 ls
-517 ls
-518 ls
-519 ls
-520 ls
-521 ls
-522 exit
-523 du
-524 ./mbbang428
-525 exit
-526 ./mbbang428
-527 ./mbbang424
-528 ./mbbang527
-529 ls
-530 exit
-531 ls -l -h -a
-532 ls
-533 du
-534 ps -aux
-535 history
-536 ./mbbang1
-537 ./mbbang-2
-538 ./mbbang3
-539 ./mbbang4
-540 exit
-541 exit
-542 ls -l -h -a
-543 ls
-544 history
-545 pwd
-546 ls -l
-547 ps -aux
-548 ls -l
-549 ./mbhistory
-550 exit
-551 exit
-552 ./mbhistory
-553 ./mbhistory
-554 ./mbhistory
-555 ./mbhistory
-556 exit
-557 ./mbhistory
-558 exit
-559 ./mbhistory
-560 exit
-561 ./mbhistory
-562 ls
-563 ./mbhistory
-564 exit
-565 ls -l -h -a
-566 ls -l
-567 ls
-568 pwd
-569 ps -aux
-570 ./mbhistory
-571 ps -aux
-572 ./mbhistory
-573 ./mbhistory
-574 ps -aux
-575 ./mbhistory
-576 ./mbhistory
-577 ./mbhistory
-578 ./mbhistory
-579 exit
-580 ls
-581 ls -l
-582 ls -l -h -a
-583 ./mbhistory
-584 ls
-585 ./mbhistory
-586 exit
-587 !ory
-588 ./mbhistory
-589 ./mbhistory
-590 !ory
-591 exit
-592 ./mbhistory
-593 ./mbbang
-594 ./mbhistory
-595 ./mbhistory
-596 ./mbhistory
-597 ./mbbang
-598 exit
+65 pwd
+66 ls -l
+67 ps -aux
+68 history
+69 history
+70 history
+71 ls
+72 !
+73 !
+74 !
+75 !
+76 ls
+77 pwd
+78 pwd
+79 exit 

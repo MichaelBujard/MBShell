@@ -60,34 +60,43 @@ void mbShell::execute(){
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
     cout << "parse_and_execute called" << endl;
 
+    string c_as_executable;  // the executable file of the c command...because the commands are 
+    // written in separate files
+
+    if (c.compare("exit") == 0){
+        exit(0);
+    }
+
     if (c.compare("history") == 0){
         // make c = ./mbhistory
-        c = "./mbhistory";
+        c_as_executable = "./mbhistory";
     }
     if (c.compare("!") == 0){
-        c = "./mbbang";
-        cout << "hit ! c = " << c << endl;
+        c_as_executable = "./mbbang";
     }
     if (c.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){
-        c.erase(0, 1);
-        c = "./mbbang" + c;
+        c_as_executable = c.erase(0, 1);
+        c_as_executable = "./mbbang" + c_as_executable;
     }
+
+    // at this point, our command, "history" or "![index]" or just "!" becomes "./mbhistory",
+    // "./mbbang[index]", or just "./mbbang"
 
     // wait for history file to update before continuing
     while(true){ 
-        // unless it's bang, in which case we need to check if the updated 
-        // history file is going to do the
-        if (c.substr(0, 8).compare("./mbbang") == 0 && c.compare("./mbbang") != 0){
 
-            string offset_str = c;
-            string bangCommand;
-        offset_str.erase(0, 8);
-            int offset = stoi(offset_str);
-            bangCommand = get_bangcmd(offset);
-            bangCommand.erase(0, 8); // remove ./mbbang substring
-            cout << "BC: " << bangCommand << endl;
+        // what if input is bang "![index]"?
+        if (c_as_executable.substr(0, 8).compare("./mbbang") == 0 && c_as_executable.compare("./mbbang") != 0){
+            string offset_str = c_as_executable;  // "./mbbang[index]", index is some number
+            string bangCommand;  // use later
+            offset_str.erase(0, 8);  // remove "./mbbang" substring to get just "[index]"
+            int offset = stoi(offset_str);  // convert string index to integer
+            // call get_bangcmd(), 
+            // which gets the offset-eth command
+            bangCommand = get_bangcmd(offset);   
+            cout << "bangCommand : " << bangCommand << endl;
             if (updateHistoryFile(bangCommand) == 0){
-                cout << "updated the history file on bang" << endl;
+                cout << "updated the history file on bang, bangCommand = " << bangCommand << endl;
                 break;
             } else {
                 cout << "uh oh on bang" << endl;
@@ -95,11 +104,12 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 break;
             }
         } else {
+            // before doing updateHistoryFile, re-convert command executables 
+            cout << "in else" << endl;
             if (updateHistoryFile(c) == 0){
                 cout << "updated the history file" << endl;
                 break;
-            }
-            else {
+            } else {
                 cout << "uh oh" << endl;
                 perror("history");
                 break;
@@ -107,39 +117,27 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         }
     }
 
-    char *cp = (char *)c.c_str();
+    cout << "variable c is " << c << endl;
+
+    char *cp = (char *)c.c_str(); // convert C++ string into char *
+
+    cout << "CP just after definition, c_as_executable, is " << cp << endl;
+    if (c.compare("history") == 0 || c.compare("!") == 0 || c.substr(0, 1).compare("!") == 0){
+        cp = (char *)c_as_executable.c_str();
+    }
     cout << "CP = " << cp << "<" << endl;
-
-    // on exit command
-    if (c.compare("exit") == 0){
-        exit(0);
-    }
-
-    // what about history?
-    /*
-    if (c.compare("./mbhistory") == 0){
-        //do we need to do anything?
-    }
-    */
-    
-    // what about bang?
-    // does the command begin with a "bang"?
-    // check if it's a bang substring.
-    if (c.substr(0, 8).compare("./mbbang") == 0){
-        c.insert(8, " ");
-        cout << "./mbbang-1 should be split. It is: " << c << endl;
-    }
 
     char** argv = get_input(cp);
 
     fork_a_process(fork(), argv);
 }
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
  * helper methods                                  *
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 void fork_a_process(int pid, char **argv){
+    cout << "fork a process called here" << pid << "and argv is " << endl;
     //Fork section
     
     if (pid == -1){
@@ -243,7 +241,7 @@ string get_bangcmd(int offset){
     
     if (offset < 0) {
         // relative address. Make absolute by subtracting from length of history file, minus 1.
-        offset += --numLines;
+        offset += numLines;
     }
 
     // access the history command at the line number specified by offset
@@ -280,5 +278,6 @@ string get_bangcmd(int offset){
         }
     }
     inFile.close();
+    cout << "in get_bangcmd, the command is " << histCommand << endl;
     return histCommand;
 }
