@@ -474,3 +474,106 @@
 474 cwd
 475 exit
 476 exit
+477 ./mbhistory
+478 ls
+479 history
+480 ./mbhistory
+481 ls
+482 ./history
+483 ./mbhistory
+484 history
+485 ./mbhistoryt
+486 !17
+487 ./mbbang
+488 ./mbbang 30
+489 exit
+490 exit
+491 exit
+492 exit
+493 exit
+494 exit
+495 ./mbbang12
+496 ./mbbang-1
+497 ./mbbang-1
+498 exit
+499 ./mbbang-1
+500 mbbang0
+501 exit
+502 exit
+503 ./mbbang17
+504 ./mbbang0
+505 exit
+506 ./mbbang0
+507 ./mbbang-1
+508 ./mbbang2
+509 ./mbbang3
+510 ./mbbang1
+511 exit
+512 ./mbbang17
+513 exit
+514 ls
+515 exit
+516 ls
+517 ls
+518 ls
+519 ls
+520 ls
+521 ls
+522 exit
+523 du
+524 ./mbbang428
+525 exit
+526 ./mbbang428
+527 ./mbbang424
+528 ./mbbang527
+529 ls
+530 exit
+531 ls -l -h -a
+532 ls
+533 du
+534 ps -aux
+535 history
+536 ./mbbang1
+537 ./mbbang-2
+538 ./mbbang3
+539 ./mbbang4
+540 exit
+541 exit
+542 ls -l -h -a
+543 ls
+544 history
+545 pwd
+546 ls -l
+547 ps -aux
+548 ls -l
+549 ./mbhistory
+550 exit
+551 exit
+552 ./mbhistory
+553 ./mbhistory
+554 ./mbhistory
+555 ./mbhistory
+556 exit
+557 ./mbhistory
+558 exit
+559 ./mbhistory
+560 exit
+561 ./mbhistory
+562 ls
+563 ./mbhistory
+564 exit
+565 ls -l -h -a
+566 ls -l
+567 ls
+568 pwd
+569 ps -aux
+570 ./mbhistory
+571 ps -aux
+572 ./mbhistory
+573 ./mbhistory
+574 ps -aux
+575 ./mbhistory
+576 ./mbhistory
+577 ./mbhistory
+578 ./mbhistory
+579 exit

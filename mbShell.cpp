@@ -36,6 +36,12 @@ char **get_input(char *input);
 *                                                               *
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void fork_a_process(int pid, char **argv);
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+* string bangCommand(string c);                                 *
+*                                                               *
+*                                                               *
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_bangcmd(int offset);
 
 int main(int argc, char* argv[]){
     mbShell ms;
@@ -54,33 +60,55 @@ void mbShell::execute(){
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
     cout << "parse_and_execute called" << endl;
 
-    char *cp = (char *)c.c_str();
-
-    cout << "CP = " << cp << "<" << endl;
-
-
     // wait for history file to update before continuing
     while(true){ 
-        if (updateHistoryFile(c) == 0){
-            cout << "updated the history file" << endl;
-            break;
-        }
-        else {
-            cout << "uh oh" << endl;
-            perror("history");
-            break;
+        // unless it's bang, in which case we need to check if the updated 
+        // history file is going to do the
+        if (c.substr(0, 8).compare("./mbbang") == 0){
+            if (c.compare("./mbbang") != 0){
+                string offset_str = c;
+                string bangCommand;
+                offset_str.erase(0, 8);
+                if (offset_str.compare("") != 0){
+                    int offset = stoi(offset_str);
+                    bangCommand = get_bangcmd(offset);
+                    if (updateHistoryFile(bangCommand) == 0){
+                        cout << "updated the history file on bang" << endl;
+                        break;
+                    } else {
+                        cout << "uh oh on bang" << endl;
+                        perror("history");
+                        break;
+                    }
+                }
+            }
+        } else {
+            if (updateHistoryFile(c) == 0){
+                cout << "updated the history file" << endl;
+                break;
+            }
+            else {
+                cout << "uh oh" << endl;
+                perror("history");
+                break;
+            }
         }
     }
-    
+
+    char *cp = (char *)c.c_str();
+    cout << "CP = " << cp << "<" << endl;
+
     // on exit command
     if (c.compare("exit") == 0){
         exit(0);
     }
 
     // what about history?
+    /*
     if (c.compare("./mbhistory") == 0){
         //do we need to do anything?
     }
+    */
     
     // what about bang?
     // does the command begin with a "bang"?
@@ -90,8 +118,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         cout << "./mbbang-1 should be split. It is: " << c << endl;
     }
 
-    char **argv = get_input(cp); // program accepts no more than 10 command line arguments
-    
+    char** argv = get_input(cp);
+
     fork_a_process(fork(), argv);
 }
 
@@ -180,4 +208,65 @@ char **get_input(char *input){
     
     return command;
 
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_bangcmd(char *argv[])            *
+ *                                             *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_bangcmd(int offset){
+
+    // This offset value should cause the 
+    // function to make the shell execute the 
+    // second-to-last command in the history file. 
+
+    //get the size of the file
+    int numLines = 1;
+    ifstream in("historyFile.txt");
+    std::string unused;
+    while ( std::getline(in, unused) )
+        ++numLines;
+    cout << "numLines " << numLines << endl;
+    in.close();
+    
+    if (offset < 0) {
+        // relative address. Make absolute by subtracting from length of history file, minus 1.
+        offset += --numLines;
+    }
+
+    // access the history command at the line number specified by offset
+
+    // open the history file for reading
+    ifstream inFile("historyFile.txt");
+
+    // line-based parsing, using streams from sstring and string libraries
+    string line;
+    int histCommIdx;  // the line number of the history file
+    string histCommand;
+    while (getline(inFile, line)){
+        if (numLines < offset || offset == 0){
+            histCommand = "";
+            break;
+        }
+        histCommand = line;  // everything after lineNumber and the following space
+        istringstream iss(line);
+        iss >> histCommIdx;
+
+        // get the command, which is everything after the index taken from above.
+
+        string::size_type n = 0;
+
+        n = histCommand.find_first_not_of( " \t", n );
+        n = histCommand.find_first_of( " \t", n );
+
+        histCommand.erase( 0,  histCommand.find_first_not_of( " \t", n ) );
+
+        // if the current line index is the offset
+        if (offset == histCommIdx){
+            // we found the command. Exit the loop.
+            break;
+        }
+    }
+    inFile.close();
+    return histCommand;
 }

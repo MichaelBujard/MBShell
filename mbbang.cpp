@@ -27,16 +27,77 @@
 
 using namespace std;
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * forward declaration of functions        *
+ *                                         *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ char **get_input(char *input);
+
+string get_bangcmd(int offset);
+
 // Driver method
 int main(int argc, char *argv[]) {
 
-    int offset = 417; // dummy value, for writing code.
+    int offset = atoi(argv[1]); // dummy value, for writing code.
+    string histCommand = get_bangcmd(offset);
+    
+    char *commandp = (char *)histCommand.c_str();
+
+    cout << "commandp = " << commandp << "<" << endl;
+
+    char **commandArgs = get_input(commandp);
+
+    // we know what command to run. How do we tell the shell to run it? We return a char ** and set the command equal to it?
+    execvp(commandArgs[0], commandArgs);
+    
+    return 0;
+}
+
+
+/*
+ * See:
+ * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
+ */
+char **get_input(char *input){
+    cout << "get_input function called in parse_and_execute" << endl;
+
+    char **command = (char **)malloc(10 * sizeof(char *));  // allocate for 10 command line args
+
+    char *separator = (char *)" ";
+    char *parsed;
+    int index = 0;
+
+    parsed = strtok(input, separator);
+
+    while (parsed != NULL){
+
+        command[index] = (char*)malloc(80 * sizeof(char));
+        strcpy(command[index], parsed);  // make bunch of char pointer variables to do strcpy      
+        cout << "command[" << index << "] : " << command[index] << endl;
+        index++;
+
+        parsed = strtok(NULL, separator);
+
+    }
+    
+    command[index] = NULL;
+    
+    return command;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_bangcmd(char *argv[])            *
+ *                                             *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_bangcmd(int offset){
+
     // This offset value should cause the 
     // function to make the shell execute the 
     // second-to-last command in the history file. 
 
     //get the size of the file
-    int numLines = 0;
+    int numLines = 1;
     ifstream in("historyFile.txt");
     std::string unused;
     while ( std::getline(in, unused) )
@@ -59,7 +120,7 @@ int main(int argc, char *argv[]) {
     int histCommIdx;  // the line number of the history file
     string histCommand;
     while (getline(inFile, line)){
-        if (numLines < offset){
+        if (numLines < offset || offset == 0){
             histCommand = "";
             break;
         }
@@ -82,10 +143,6 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
-    cout << "the command at the " << histCommIdx << "th line of the history file, offset = " << offset << ", is " << histCommand << endl;
-    
-    // we know what command to run. How do we tell the shell to run it? We return a char ** and set the command equal to it?
-
-    return 0;
+    inFile.close();
+    return histCommand;
 }
-
