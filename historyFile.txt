@@ -157,3 +157,15 @@
 157 !
 158 !
 159 history
+160 ls
+161 ls -l
+162 history
+163 !
+164 !
+165 !
+166 history
+167 !
+168 history
+169 history
+170 ls -l -h
+171 ls -l -h
