@@ -577,3 +577,22 @@
 577 ./mbhistory
 578 ./mbhistory
 579 exit
+580 ls
+581 ls -l
+582 ls -l -h -a
+583 ./mbhistory
+584 ls
+585 ./mbhistory
+586 exit
+587 !ory
+588 ./mbhistory
+589 ./mbhistory
+590 !ory
+591 exit
+592 ./mbhistory
+593 ./mbbang
+594 ./mbhistory
+595 ./mbhistory
+596 ./mbhistory
+597 ./mbbang
+598 exit

@@ -60,27 +60,39 @@ void mbShell::execute(){
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
     cout << "parse_and_execute called" << endl;
 
+    if (c.compare("history") == 0){
+        // make c = ./mbhistory
+        c = "./mbhistory";
+    }
+    if (c.compare("!") == 0){
+        c = "./mbbang";
+        cout << "hit ! c = " << c << endl;
+    }
+    if (c.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){
+        c.erase(0, 1);
+        c = "./mbbang" + c;
+    }
+
     // wait for history file to update before continuing
     while(true){ 
         // unless it's bang, in which case we need to check if the updated 
         // history file is going to do the
-        if (c.substr(0, 8).compare("./mbbang") == 0){
-            if (c.compare("./mbbang") != 0){
-                string offset_str = c;
-                string bangCommand;
-                offset_str.erase(0, 8);
-                if (offset_str.compare("") != 0){
-                    int offset = stoi(offset_str);
-                    bangCommand = get_bangcmd(offset);
-                    if (updateHistoryFile(bangCommand) == 0){
-                        cout << "updated the history file on bang" << endl;
-                        break;
-                    } else {
-                        cout << "uh oh on bang" << endl;
-                        perror("history");
-                        break;
-                    }
-                }
+        if (c.substr(0, 8).compare("./mbbang") == 0 && c.compare("./mbbang") != 0){
+
+            string offset_str = c;
+            string bangCommand;
+        offset_str.erase(0, 8);
+            int offset = stoi(offset_str);
+            bangCommand = get_bangcmd(offset);
+            bangCommand.erase(0, 8); // remove ./mbbang substring
+            cout << "BC: " << bangCommand << endl;
+            if (updateHistoryFile(bangCommand) == 0){
+                cout << "updated the history file on bang" << endl;
+                break;
+            } else {
+                cout << "uh oh on bang" << endl;
+                perror("history");
+                break;
             }
         } else {
             if (updateHistoryFile(c) == 0){
