@@ -61,38 +61,31 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     cout << "parse_and_execute called" << endl;
 
     string c_as_executable;  // the executable file of the c command...because the commands are 
-    // written in separate files
+    c_as_executable = c;
 
     if (c.compare("exit") == 0){
         exit(0);
     }
-
     if (c.compare("history") == 0){
-        // make c = ./mbhistory
         c_as_executable = "./mbhistory";
     }
     if (c.compare("!") == 0){
         c_as_executable = "./mbbang";
     }
     if (c.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){
-        c_as_executable = c.erase(0, 1);
+        c_as_executable = c_as_executable.erase(0, 1);
         c_as_executable = "./mbbang" + c_as_executable;
     }
 
-    // at this point, our command, "history" or "![index]" or just "!" becomes "./mbhistory",
-    // "./mbbang[index]", or just "./mbbang"
-
-    // wait for history file to update before continuing
+    // wait for history file to update
     while(true){ 
 
-        // what if input is bang "![index]"?
         if (c_as_executable.substr(0, 8).compare("./mbbang") == 0 && c_as_executable.compare("./mbbang") != 0){
             string offset_str = c_as_executable;  // "./mbbang[index]", index is some number
             string bangCommand;  // use later
             offset_str.erase(0, 8);  // remove "./mbbang" substring to get just "[index]"
             int offset = stoi(offset_str);  // convert string index to integer
-            // call get_bangcmd(), 
-            // which gets the offset-eth command
+
             bangCommand = get_bangcmd(offset);   
             cout << "bangCommand : " << bangCommand << endl;
             if (updateHistoryFile(bangCommand) == 0){
@@ -104,7 +97,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 break;
             }
         } else {
-            // before doing updateHistoryFile, re-convert command executables 
+
             cout << "in else" << endl;
             if (updateHistoryFile(c) == 0){
                 cout << "updated the history file" << endl;
@@ -119,13 +112,16 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     cout << "variable c is " << c << endl;
 
-    char *cp = (char *)c.c_str(); // convert C++ string into char *
+    char *cp = (char *)c.c_str();
 
-    cout << "CP just after definition, c_as_executable, is " << cp << endl;
-    if (c.compare("history") == 0 || c.compare("!") == 0 || c.substr(0, 1).compare("!") == 0){
+    if (c.compare("history") == 0) {
         cp = (char *)c_as_executable.c_str();
+    } else if (c.compare("!") == 0){
+        cp = (char *)c_as_executable.c_str();
+    } else if (c.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){
+        c.insert(1, " ");
+        cp = (char *)c.c_str();
     }
-    cout << "CP = " << cp << "<" << endl;
 
     char** argv = get_input(cp);
 

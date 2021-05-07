@@ -77,3 +77,83 @@
 77 pwd
 78 pwd
 79 exit 
+80 exit 
+81 exit 
+82 history
+83 ls -l -h -a
+84 ps -aux
+85 pwd
+86 ls
+87 history
+88 history
+89 ls
+90 ls
+91 ls
+92 ls
+93 ls
+94 history
+95 history
+96 ls
+97 ls
+98 ls
+99 ls
+100 ls
+101 !
+102 mbls
+103 mbls
+104 ls
+105 ls -l -h -a
+106 du
+107 ps -aux
+108 ls
+109 history
+110 ls
+111 ls
+112 ls
+113 history
+114 ls -l -h -a
+115 ls -l -h -a
+116 pwd
+117 !
+118 !
+119 !
+120 ls
+121 ls
+122 ls
+123 pwd
+124 ls -l
+125 ls -l
+126 pwd
+127 du
+128 w
+129 w
+130 w
+131 ls
+132 ls -l
+133 ls -l -h
+134 ls -l -h
+135 ls -l
+136 ls
+137 w
+138 w
+139 ls
+140 history
+141 history
+142 history
+143 history
+144 history
+145 ls
+146 ls
+147 ls -l
+148 du
+149 pwd
+150 ls -l
+151 ps -aux
+152 ls -l
+153 history
+154 history
+155 !
+156 !
+157 !
+158 !
+159 history

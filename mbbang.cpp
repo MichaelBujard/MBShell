@@ -40,6 +40,10 @@ int main(int argc, char *argv[]) {
 
     int offset = atoi(argv[1]); // dummy value, for writing code.
     string histCommand = get_bangcmd(offset);
+
+    if (histCommand.compare("history") == 0){
+        histCommand = "./mbhistory";
+    }
     
     char *commandp = (char *)histCommand.c_str();
 
@@ -107,7 +111,7 @@ string get_bangcmd(int offset){
     
     if (offset < 0) {
         // relative address. Make absolute by subtracting from length of history file, minus 1.
-        offset += numLines;
+        offset += numLines++;
     }
 
     // access the history command at the line number specified by offset
