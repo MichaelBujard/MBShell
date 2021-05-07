@@ -412,3 +412,22 @@
 412 !!
 413 ls
 414 ./mbhistory
+415 ls -l -h -a
+416 exit
+417 ./mbbang
+418 exit
+419 ./mbbang
+420 ./mbbang
+421 ./mbbang21
+422 exit
+423 ./mbhistory
+424 ./mbbang
+425 exit
+426 ls -l -h -a
+427 exit
+428 ls
+429 ls
+430 ls
+431 ls -l -h -a
+432 du
+433 pwd

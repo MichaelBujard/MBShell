@@ -41,26 +41,6 @@ void mbShell::execute(){
         cout << greeting;
         getline(cin, command);      
 
-        // wait for history file to update before calling parse_and_execute()
-        while(true){ 
-            if (updateHistoryFile(command) == 0){
-                cout << "updated the history file" << endl;
-                break;
-            }
-            else {
-                cout << "uh oh" << endl;
-                perror("history");
-                break;
-            }
-        }
-
-        // does the command begin with a "bang"?
-        // checkIfBang
-        if (command.substr(0, 8).compare("./mbbang") == 0){
-            command.insert(8, " ");
-            cout << "./mbbang-1 should be split. It is: " << command << endl;
-        }
-
         parse_and_execute(command);
     }
 }
@@ -71,18 +51,39 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     cout << "CP = " << cp << "<" << endl;
 
+
+    // wait for history file to update before calling parse_and_execute()
+    while(true){ 
+        if (updateHistoryFile(cp) == 0){
+            cout << "updated the history file" << endl;
+            break;
+        }
+        else {
+            cout << "uh oh" << endl;
+            perror("history");
+            break;
+        }
+    }
+    
+    // on exit command
+    if (c.compare("exit") == 0){
+        exit(0);
+    }
+
+    // what about history?
+    
+    // what about bang?
+    // does the command begin with a "bang"?
+    // checkIfBang
+    if (command.substr(0, 8).compare("./mbbang") == 0){
+        command.insert(8, " ");
+        cout << "./mbbang-1 should be split. It is: " << command << endl;
+    }
+
     char **argv = get_input(cp); // program accepts no more than 10 command line arguments
     
     cout << argv[0] << "---" << argv[1] << "---" << argv[2] << argv[3] << endl;
-    // why is this not printing with command "ls"? What about
     cout << argv[0] << endl;
-
-
-
-    if (c.compare("exit") == 0){
-        cout << "in exit case" << endl;
-        exit(0);
-    }
 
     /*
     Fork section
@@ -122,6 +123,7 @@ int updateHistoryFile(string c) {
     while ( std::getline(in, unused) )
         ++numLines;
     cout << "numLines " << numLines << endl;
+    in.close();
 
     // instantiate file
     std::ofstream ofs;
