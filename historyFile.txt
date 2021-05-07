@@ -431,3 +431,18 @@
 431 ls -l -h -a
 432 du
 433 pwd
+434 exit
+435 ./mbhistory
+436 ./mbbang-1
+437 ./mbbang
+438 ./exit
+439 exit
+440 exit
+441 exit
+442 ls -l -h -a
+443 ls
+444 ./mbhistory
+445 ./mbbang
+446 ./mbbang-1
+447 exit
+448 exit

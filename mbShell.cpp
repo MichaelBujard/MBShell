@@ -46,6 +46,7 @@ void mbShell::execute(){
 }
 
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
+    cout << "parse_and_execute called" << endl;
 
     char *cp = (char *)c.c_str();
 
@@ -54,7 +55,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     // wait for history file to update before calling parse_and_execute()
     while(true){ 
-        if (updateHistoryFile(cp) == 0){
+        if (updateHistoryFile(c) == 0){
             cout << "updated the history file" << endl;
             break;
         }
@@ -71,10 +72,13 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     }
 
     // what about history?
+    if (c.compare("./mbhistory") == 0){
+        //do we need to do anything?
+    }
     
     // what about bang?
     // does the command begin with a "bang"?
-    // checkIfBang
+    // check if it's a bang substring.
     if (command.substr(0, 8).compare("./mbbang") == 0){
         command.insert(8, " ");
         cout << "./mbbang-1 should be split. It is: " << command << endl;
@@ -111,18 +115,18 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         }
         cout << "parent: " << pid << endl;
         
-    }
-    cout << "You entered a command." << endl;
+    }    
 }
 
 
 int updateHistoryFile(string c) {
+    cout << "updateHistoryFile called in parse_and_execute" << endl;
     int numLines = 1;
     ifstream in("historyFile.txt");
     std::string unused;
-    while ( std::getline(in, unused) )
+    while ( std::getline(in, unused) ){
         ++numLines;
-    cout << "numLines " << numLines << endl;
+    }
     in.close();
 
     // instantiate file
@@ -142,6 +146,7 @@ int updateHistoryFile(string c) {
  * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
  */
 char **get_input(char *input){
+    cout << "get_input function called in parse_and_execute" << endl;
 
     char **command = (char **)malloc(10 * sizeof(char *));  // allocate for 10 command line args
 
