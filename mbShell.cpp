@@ -26,10 +26,16 @@ int updateHistoryFile(string c);
 * char **get_input(char *input)                                 *
 * User-defined function that takes the command as an argument,  *
 * and uses strtok() to split the string w.r.t. whitespace, ' '  *
-* and return an array of strings instead                        *
+* and return an array of strings instead (char **)              *
 * and terminate the array with NULL                             *
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 char **get_input(char *input);
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+* void fork_a_process(int pid, char **argv)                     *
+*                                                               *
+*                                                               *
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void fork_a_process(int pid, char **argv);
 
 int main(int argc, char* argv[]){
     mbShell ms;
@@ -53,7 +59,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     cout << "CP = " << cp << "<" << endl;
 
 
-    // wait for history file to update before calling parse_and_execute()
+    // wait for history file to update before continuing
     while(true){ 
         if (updateHistoryFile(c) == 0){
             cout << "updated the history file" << endl;
@@ -79,20 +85,23 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     // what about bang?
     // does the command begin with a "bang"?
     // check if it's a bang substring.
-    if (command.substr(0, 8).compare("./mbbang") == 0){
-        command.insert(8, " ");
-        cout << "./mbbang-1 should be split. It is: " << command << endl;
+    if (c.substr(0, 8).compare("./mbbang") == 0){
+        c.insert(8, " ");
+        cout << "./mbbang-1 should be split. It is: " << c << endl;
     }
 
     char **argv = get_input(cp); // program accepts no more than 10 command line arguments
     
-    cout << argv[0] << "---" << argv[1] << "---" << argv[2] << argv[3] << endl;
-    cout << argv[0] << endl;
+    fork_a_process(fork(), argv);
+}
 
-    /*
-    Fork section
-    */
-    int pid = fork();
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * helper methods                                  *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void fork_a_process(int pid, char **argv){
+    //Fork section
+    
     if (pid == -1){
         perror("fork");
     }    
@@ -115,7 +124,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
         }
         cout << "parent: " << pid << endl;
         
-    }    
+    }
 }
 
 

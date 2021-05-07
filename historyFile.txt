@@ -446,3 +446,31 @@
 446 ./mbbang-1
 447 exit
 448 exit
+449 ls -l -h -a
+450 ls
+451 exit
+452 ls
+453 l
+454 james
+455 joseph
+456 Jude
+457 ./mbhistory
+458 ./mbbang
+459 ./mbbang-1
+460 exit
+461 exit
+462 exit
+463 exit
+464 exit
+465 ls
+466 exit
+467 exit
+468 ls -l -h -a
+469 exit
+470 exit
+471 ls -l -h -a
+472 ls
+473 du
+474 cwd
+475 exit
+476 exit
