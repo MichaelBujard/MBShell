@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -68,12 +69,59 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     string c_command = c;
     while(true) {
-        if (c_command.substr(0, 1).compare("!") == 0 
-            && c_command.compare("!") != 0) {
-            string offset_str = c_command.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
-            int offset = stoi(offset_str);  // convert string index to integer
-            c_command = get_bangcmd(offset);
-            cout << "while trying to update history file, c_command is " << c_command << endl;
+        if (c_command.substr(0, 1).compare("!") == 0 && c_command.compare("!") != 0) {
+            cout << "c_command : " << c_command << endl;
+            if (c_command.find((string)">") != std::string::npos) {
+                cout << "FOUND '>'" << endl;
+                // we have a command like !-1 > foo.txt
+                // first, get the command that ![offset] calls,
+                // then store it as c_command
+                // then append the rest of the command to it,
+                // which is something like '> foo.txt'
+
+                /*
+                    * 1. split the command into '![offset]' and ' > foo.txt'
+                    * spaces are a bit of a problem, so we will just remove them. See
+                    * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
+                    * about removal of spaces.
+                    */
+                stringstream sscommand(c_command);
+                string segment;
+                vector<string> segvctr;
+                while (getline(sscommand, segment, '>')) {
+                    //segment.erase(remove_if(segment.begin(), segment.end(), isspace), segment.end());
+                    segvctr.push_back(segment);
+                    cout << "type of segment is " << typeid(segment).name() << endl;
+                    cout << "SEGMENT : " << segment << endl;
+                }
+                // loop through variables, removing whitespace.
+                for (std::size_t i = 0; i < segvctr.size(); i++) {
+                    cout << segvctr.at(i) << endl;
+                }
+                /*
+                    * now we have something like:
+                    * vector<string> segvctr{"![index] "};
+
+                // 2. find the command that ! calls from its offset
+
+                // 3. store the command in c_command
+
+                // 4. append the rest of the command to c_command
+
+
+            } else {
+                /*
+                * suppose we are not redirecting with bang. i.e.
+                * suppose we are doing any normal, valid command with 
+                * ![offset] alone. Then in history we just print out the command corresponding to the 
+                * bang, that is, the command in the history file at offset = index of history file
+                */
+
+                string offset_str = c_command.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
+                int offset = stoi(offset_str);  // convert string index to integer
+                c_command = get_bangcmd(offset);
+                cout << "while trying to update history file, c_command is " << c_command << endl;
+            }
         }        
         if (updateHistoryFile(c_command) == 0) {
             cout << "updated history file" << endl;
@@ -97,62 +145,6 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     if (c_command.compare("!") == 0){
         cout << "!" << endl;
     }
-    
-    /*
-    if (c.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){ // then ![offset]
-        c_as_executable = c_as_executable.erase(0, 1);
-        c_as_executable = "./mbbang " + c_as_executable;
-
-        string offset_str = c_as_executable; // "./mbbang[index]", index can be some number
-        
-        string bangCommand;  // use later
-        offset_str.erase(0, 8);  // remove "./mbbang" substring to get just "[index]"
-        int offset = stoi(offset_str);  // convert string index to integer
-        bangCommand = get_bangcmd(offset);
-        c = bangCommand;
-        cout << "C in BANG : " << c << endl;
-    }
-    */
-
-
-    /*
-    // wait for history file to update
-    while(true){ 
-
-        string offset_str = c_as_executable;  // "./mbbang[index]", index is some number
-        string bangCommand;  // use later
-        offset_str.erase(0, 8);  // remove "./mbbang" substring to get just "[index]"
-
-        if (c_as_executable.substr(0, 8).compare("./mbbang") == 0 
-            && c_as_executable.compare("./mbbang") != 0){
-            cout << "this is true" << endl;
-
-            int offset = stoi(offset_str);  // convert string index to integer
-
-            bangCommand = get_bangcmd(offset);   
-            cout << "bangCommand : " << bangCommand << endl;
-            if (updateHistoryFile(bangCommand) == 0){
-                cout << "updated the history file on bang, bangCommand = " << bangCommand << endl;
-                break;
-            } else {
-                cout << "uh oh on bang" << endl;
-                perror("history");
-                break;
-            }
-        } else {
-
-            cout << "in else" << endl;
-            if (updateHistoryFile(c) == 0){
-                cout << "updated the history file" << endl;
-                break;
-            } else {
-                cout << "uh oh" << endl;
-                perror("history");
-                break;
-            }
-        }
-    }
-    */
 
     cout << "variable c is " << c << endl;
     cout << "variable c_command is " << c_command << endl;
@@ -160,7 +152,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     if (c_command.find(" > ") != std::string::npos){
         // starting with simplest use of file redirect from stdout to,
         // I guess, "non-standard output"
-        //execute the 
+        cout << "found redirection!" << endl;
     }
 
     char *cp = (char *)c_command.c_str();
@@ -176,9 +168,10 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     }
     */
 
-    char** argv = get_input(cp);
-
-    fork_a_process(fork(), argv);
+    if (c_command.compare("!") != 0){
+        char** argv = get_input(cp);
+        fork_a_process(fork(), argv);
+    }
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

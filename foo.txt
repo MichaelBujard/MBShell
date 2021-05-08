@@ -1,0 +1,612 @@
+    1  g++ mbbang.cpp -o mbbang
+    2  ./mbbang
+    3  g++ mbbang.cpp -o mbbang
+    4  ./mbbang
+    5  g++ mbbang.cpp -o mbbang
+    6  ./mbbang
+    7  g++ mbbang.cpp -o mbbang
+    8  ./mbbang
+    9  g++ mbbang.cpp -o mbbang
+   10  ./mbbang
+   11  g++ mbbang.cpp -o mbbang
+   12  ./mbbang
+   13  g++ mbbang.cpp -o mbbang
+   14  ./mbbang
+   15  g++ mbbang.cpp -o mbbang
+   16  ./mbbang
+   17  g++ mbbang.cpp -o mbbang
+   18  ./mbbang
+   19  git status
+   20  git add *
+   21  git commit -m "update bang and shell files"
+   22  git push
+   23  git status
+   24  cd project/source/repos
+   25  ls
+   26  cd MBShell
+   27  ls
+   28  ./mbbang
+   29  ls
+   30  cd projects/source/repos
+   31  ls
+   32  cd project/source/repos
+   33  cd MBShell
+   34  ls
+   35  g++ mbShell.cpp -o mbshell
+   36  ls
+   37  g++ mbhistory.cpp -o mbhistory
+   38  g++ mbbang.cpp -o mbbang
+   39  ./mbbang
+   40  g++ mbbang.cpp -o mbbang
+   41  ./mbbang
+   42  g++ mbbang.cpp -o mbbang
+   43  ./mbbang
+   44  g++ mbbang.cpp -o mbbang
+   45  ./mbbang
+   46  g++ mbbang.cpp -o mbbang
+   47  ./mbbang
+   48  g++ mbbang.cpp -o mbbang
+   49  ./mbbang
+   50  g++ mbbang.cpp -o mbbang
+   51  ./mbbang
+   52  g++ mbbang.cpp -o mbbang
+   53  ./mbbang
+   54  g++ mbbang.cpp -o mbbang
+   55  ./mbbang
+   56  g++ mbbang.cpp -o mbbang
+   57  ./mbbang
+   58  g++ mbbang.cpp -o mbbang
+   59  ./mbbang
+   60  g++ mbShell.cpp -o mbshell
+   61  ./mbshell
+   62  ./mbbang
+   63  g++ mbbang.cpp -o mbbang
+   64  ./mbbang
+   65  g++ mbbang.cpp -o mbbang
+   66  ./mbbang
+   67  g++ mbbang.cpp -o mbbang
+   68  ./mbbang
+   69  g++ mbbang.cpp -o mbbang
+   70  ./mbbang
+   71  g++ mbbang.cpp -o mbbang
+   72  ./mbbang
+   73  g++ mbbang.cpp -o mbbang
+   74  ./mbbang
+   75  ls
+   76  pwd
+   77  w
+   78  !
+   79  history
+   80  ./mbbang
+   81  g++ mbbang.cpp -o mbbang
+   82  ./mbbang
+   83  g++ mbbang.cpp -o mbbang
+   84  ./mbbang
+   85  ./mbshell
+   86  g++ mbbang.cpp -o mbbang
+   87  ./mbshell
+   88  g++ mbShell.cpp -o mbshell
+   89  ls
+   90  g++ mbhistory.cpp -o mbhistory
+   91  g++ mbbang.cpp -o mbbang
+   92  ls
+   93  ./mbbang
+   94  ./mbhistory
+   95  ./mbshell
+   96  ls
+   97  g++ mbShell.cpp -o mbshell
+   98  ./mbShell
+   99  ./mbshell
+  100  git status
+  101  git add *
+  102  git status
+  103  git commit -m "update mbbang, shell"
+  104  git push
+  105  git status
+  106  g++ mbShell.cpp -o mbshell
+  107  ./mbshell
+  108  g++ mbShell.cpp -o mbshell
+  109  g++ mbbang.cpp -o mbbang
+  110  g++ mbhistory.cpp -o mbhistory
+  111  ls
+  112  ./mbbang
+  113  ./mbhistory
+  114  ./mbshell
+  115  git status
+  116  git add *
+  117  git commit -m "updated files for shell. history log changed."
+  118  git push
+  119  ls
+  120  g++ mbShell.cpp -o mbshell
+  121  ./mbshell
+  122  g++ mbShell.cpp -o mbshell
+  123  ./mbshell
+  124  g++ mbShell.cpp -o mbshell
+  125  ./mbshell
+  126  g++ mbShell.cpp -o mbshell
+  127  ./mbshell
+  128  g++ mbShell.cpp -o mbshell
+  129  ./mbshell
+  130  git status
+  131  git add *
+  132  git commit -m "update"
+  133  git push
+  134  git status
+  135  cd project/source/repos/MBShell
+  136  ls
+  137  g++ mbShell.cpp -o mbshell
+  138  ./mbshell
+  139  g++ mbbang.cpp -o mbbang
+  140  ./mbbang
+  141  ./mbbang 17
+  142  ./mbbang 20
+  143  ./mbbang 40
+  144  g++ mbShell.cpp -o mbshell
+  145  ./mbshell
+  146  g++ mbShell.cpp -o mbshell
+  147  g++ mbbang.cpp -o mbbang
+  148  ./mbshell
+  149  g++ mbShell.cpp -o mbshell
+  150  g++ mbbang.cpp -o mbbang
+  151  ./mbshell
+  152  g++ mbShell.cpp -o mbshell
+  153  g++ mbbang.cpp -o mbbang
+  154  ./mbshell
+  155  ./mbbang2
+  156  ./mbbang
+  157  ./mbbang 2
+  158  ./mbbang 3
+  159  g++ mbbang.cpp -o mbbang
+  160  ./mbbang 20
+  161  du
+  162  g++ mbShell.cpp -o mbshell
+  163  g++ mbbang.cpp -o mbbang
+  164  ./mbshell
+  165  ./mbbang
+  166  ./mbbang 1
+  167  ./mbbang -1
+  168  ./mbbang428
+  169  ./mbbang 428
+  170  ./mbbang 524
+  171  g++ mbbang.cpp -o mbbang
+  172  g++ mbShell.cpp -o mbshell
+  173  ./mbshell
+  174  !
+  175  history
+  176  ls
+  177  history
+  178  ls
+  179  history
+  180  g++ mbbang.cpp -o mbbang
+  181  ./mbbang 20
+  182  g++ mbShell.cpp -o mbshell
+  183  ./mbshell
+  184  g++ mbShell.cpp -o mbshell
+  185  ./mbshell
+  186  g++ mbShell.cpp -o mbshell
+  187  ./mbshell
+  188  g++ mbShell.cpp -o mbshell
+  189  g++ mbbang.cpp -o mbbang
+  190  history
+  191  ./mbshell
+  192  ./mbbang0
+  193  ./mbbang1
+  194  ./mbshell
+  195  !
+  196  history
+  197  !
+  198  history
+  199  !
+  200  history
+  201  !
+  202  history
+  203  g++ mbShell.cpp -o mbshell
+  204  g++ mbbang.cpp -o mbbang
+  205  ./mbshell
+  206  g++ mbbang.cpp -o mbbang
+  207  g++ mbShell.cpp -o mbshell
+  208  ./mbshell
+  209  g++ mbShell.cpp -o mbshell
+  210  g++ mbbang.cpp -o mbbang
+  211  ./mbshell
+  212  git status
+  213  git add *
+  214  git status
+  215  git commit -m "added and updated files"
+  216  git push
+  217  git status
+  218  ./mbshell
+  219  g++ mbShell.cpp -o mbshell
+  220  g++ mbbang.cpp -o mbbang
+  221  ./mbshell
+  222  g++ mbShell.cpp -o mbshell
+  223  ./mbshell
+  224  g++ mbShell.cpp -o mbshell
+  225  ./mbshell
+  226  g++ mbShell.cpp -o mbshell
+  227  ./mbshell
+  228  g++ mbShell.cpp -o mbshell
+  229  ./mbshell
+  230  g++ mbShell.cpp -o mbshell
+  231  ./mbshell
+  232  git add *
+  233  git commit -m "update shell"
+  234  git push
+  235  cd project
+  236  cd source/repos
+  237  cd MBShell
+  238  ls
+  239  ./mbshell
+  240  g++ mbShell.cpp -o mbshell
+  241  g++ mbbang.cpp -o mbbang
+  242  ./mbshell
+  243  g++ mbShell.cpp -o mbshell
+  244  cd project/source/repos/MBShell
+  245  ls
+  246  g++ mbShell.cpp -o mbshell
+  247  g++ mbbang.cpp -o mbbang
+  248  ./mbshell
+  249  g++ mbShell.cpp -o mbshell
+  250  ./mbshell
+  251  !
+  252  ./mbshell
+  253  g++ mbShell.cpp -o mbshell
+  254  ./mbshell
+  255  g++ mbShell.cpp -o mbshell
+  256  ./mbshell
+  257  g++ mbShell.cpp -o mbshell
+  258  ./mbshell
+  259  g++ mbShell.cpp -o mbshell
+  260  ./mbshell
+  261  g++ mbShell.cpp -o mbshell
+  262  ./mbshell
+  263  g++ mbShell.cpp -o mbshell
+  264  ./mbshell
+  265  g++ mbShell.cpp -o mbshell
+  266  ./mbshell
+  267  g++ mbShell.cpp -o mbshell
+  268  ./mbshell
+  269  g++ mbShell.cpp -o mbshell
+  270  ./mbshell
+  271  g++ mbShell.cpp -o mbshell
+  272  ./mbshell
+  273  g++ mbShell.cpp -o mbshell
+  274  ./mbshell
+  275  ls
+  276  g++ mbShell.cpp -o mbshell
+  277  ./mbshell
+  278  g++ mbShell.cpp -o mbshell
+  279  ./mbshell
+  280  g++ mbbang.cpp -o mbbang
+  281  g++ mbShell.cpp -o mbshell
+  282  ./mbshell
+  283  ./mbbang0
+  284  ./mbbang 0
+  285  ./mbbang 1
+  286  ./mbbang -1
+  287  ./mbbang -2
+  288  ./mbbang -1
+  289  g++ mbbang.cpp -o mbbang
+  290  ./mbbang -1
+  291  ./mbbang -2
+  292  ./mbbang -3
+  293  ./mbbang -4
+  294  g++ mbbang.cpp -o mbbang
+  295  g++ mbShell.cpp -o mbshell
+  296  ./mbshell
+  297  ls
+  298  g++ mbhistory.cpp -o mbhistory
+  299  g++ mbShell.cpp -o mbshell
+  300  g++ mbbang.cpp -o mbbang
+  301  ./mbshell
+  302  ls
+  303  g++ mbbang.cpp -o mbbang
+  304  g++ mbShell.cpp -o mbshell
+  305  ./mbshell
+  306  g++ mbShell.cpp -o mbshell
+  307  g++ mbbang.cpp -o mbbang
+  308  ls -l -h -a
+  309  ./mbshell
+  310  git status
+  311  git add *
+  312  git status
+  313  git commit -m "added message"
+  314  ls
+  315  git status
+  316  git push
+  317  git status
+  318  ./mbshell
+  319  g++ mbShell.cpp -o mbshell
+  320  ./mbshell
+  321  g++ mbShell.cpp -o mbshell
+  322  ./mbshell
+  323  g++ mbShell.cpp -o mbshell
+  324  ./mbshell
+  325  g++ mbShell.cpp -o mbshell
+  326  ./mbshell
+  327  g++ mbShell.cpp -o mbshell
+  328  ./mbshell
+  329  g++ mbShell.cpp -o mbshell
+  330  ls
+  331  g++ mbbang.cpp -o mbbang
+  332  g++ mbhistory.cpp -o mbhistory
+  333  g++ mbShell.cpp -o mbshell
+  334  ./mbshell
+  335  g++ mbShell.cpp -o mbshell
+  336  ./mbshell
+  337  g++ mbShell.cpp -o mbshell
+  338  ./mbshell
+  339  g++ mbbang.cpp -o mbbang
+  340  g++ mbShell.cpp -o mbshell
+  341  ./mbshell
+  342  g++ mbShell.cpp -o mbshell
+  343  g++ mbbang.cpp -o mbbang
+  344  ./mbshell
+  345  ./mbbang -1
+  346  ./mbbang 145
+  347  ./mbbang 1
+  348  ./mbbang -144
+  349  ./mbbang -145
+  350  ./mbbang 139
+  351  ./mbbang 138
+  352  ./mbshell
+  353  git status
+  354  git add *
+  355  git commit -m "added updated shell and bang"
+  356  git push
+  357  ls
+  358  ./mbbang -1
+  359  ls -l
+  360  ./mbshell
+  361  g++ mbbang.cpp -o mbbang
+  362  g++ mbShell.cpp -o mbshell
+  363  ./mbshell
+  364  git status
+  365  git add *
+  366  git commit -m "update history file"
+  367  git push
+  368  git status
+  369  ls
+  370  cd project
+  371  cd source/repos
+  372  ls
+  373  cd MBShell
+  374  ls
+  375  ./mbhistory
+  376  ls
+  377  git status
+  378  git add *
+  379  git commit -m "update README"
+  380  git push
+  381  git status
+  382  ls
+  383  cd ..
+  384  ls
+  385  cd ..
+  386  ls
+  387  cd ..
+  388  ls
+  389  cd ..
+  390  ls
+  391  cd project/source/repos/MBShell
+  392  ls
+  393  cd redirect_stdout
+  394  ls
+  395  g++ dup2DemoWun.cpp -o dup2di
+  396  ls
+  397  ./dup2di
+  398  source #include > 02_dup2.c
+  399  ls
+  400  source > 02_dup2.cpp
+  401  source ls 1> 02_dup2.cpp
+  402  ls
+  403  g++ 02_dup2.cpp -o demoTwoDup
+  404  ./demoTwoDup
+  405  ls
+  406  cat input.txt
+  407  cat output.txt
+  408  helo > outputone.txt
+  409  'helo' > outpt.txt
+  410  echo 'help' > outpt.txt
+  411  cat outpt.txt
+  412  echo "Master, save me!" > outpt.txt
+  413  ls
+  414  cat outpt.txt
+  415  cat outpt
+  416  cat outpt.txt
+  417  echo "This is my output. This is standard input to the file." > inptfl.txt
+  418  cat inptfl.txt
+  419  outpt.txt > inptfl.txt
+  420  cat outpt.txt > inptfl.txt
+  421  cat inptfl.txt
+  422  ls > inptfl.txt
+  423  cat inptfl.txt
+  424  pwd > inptfl.txt
+  425  cat inptfl.txt
+  426  ls -l > inptfl.txt
+  427  cat inptfl.txt
+  428  cat README.md > inptfl.txt
+  429  cat inptfl.txt
+  430  man man > inptfl.txt
+  431  cat inptfl.txt
+  432  echo "" > inptfl.txt
+  433  cat inptfl.txt
+  434  history > inptfl.txt
+  435  cat inptfl.txt
+  436  cat inptfl.txt > inptfl.txt
+  437  inptfl.txt
+  438  cat inptfl.txt
+  439  history
+  440  ls > inptfl.txt
+  441  cat inptfl.txt
+  442  ls > inptfl.txt
+  443  cat inptfl.txt
+  444  history
+  445  cat inptfl.txt
+  446  cd ..
+  447  ls
+  448  ./mbshell
+  449  git status
+  450  git add *
+  451  git status
+  452  git commit -m "add practice files for standard output redirection"
+  453  git push
+  454  cd projects/source/repos/MBShell
+  455  cd project/source/repos/MBShell
+  456  ls
+  457  ./mbshell
+  458  history
+  459  g++ mbbang.cpp -o mbbang
+  460  ./mbbang 500
+  461  ./mbshell
+  462  g++ mbbang.cpp -o mbbang
+  463  ./mbshell
+  464  ls
+  465  ./a.out
+  466  ls
+  467  grep -E c$ - 
+  468  ls
+  469  mkdir exec
+  470  cd exec
+  471  ls
+  472  echo $ > exec.c
+  473  ls
+  474  cat exec.c
+  475  echo "#include <unistd.h>" > exec.c
+  476  cat exec.c
+  477  echo \n >> exec.c
+  478  cat exec.c
+  479  ls
+  480  cd exec
+  481  ls
+  482  gcc exec.c
+  483  ls
+  484  ./a.out
+  485  cat a.out
+  486  cat exec.c
+  487  gcc exec.c
+  488  ./a.out
+  489  cd exec
+  490  cat redirect_fd.txt 
+  491  ./a.out
+  492  ls
+  493  cat redirect_fd.txt
+  494  ls
+  495  cd project
+  496  ls
+  497  cd source/repos
+  498  ls
+  499  cd MBShell
+  500  ls
+  501  g++ mbShell.cpp -o mbshell
+  502  cd project/source/repos/MBShell
+  503  ls
+  504  g++ mbShell.cpp -o mbshell
+  505  ./mbshell
+  506  g++ mbShell.cpp -o mbshell
+  507  ./mbshell
+  508  g++ mbShell.cpp -o mbshell
+  509  ./mbshell
+  510  g++ mbbang.cpp -o mbbang
+  511  ./mbshell
+  512  g++ mbShell.cpp -o mbshell
+  513  ./mbshell
+  514  g++ mbShell.cpp -o mbshell
+  515  ./mbshell
+  516  g++ mbShell.cpp -o mbshell
+  517  ./mbshell
+  518  g++ mbShell.cpp -o mbshell
+  519  ./mbshell
+  520  g++ mbShell.cpp -o mbshell
+  521  ./mbshell
+  522  g++ mbShell.cpp -o mbshell
+  523  ./mbshell
+  524  g++ mbShell.cpp -o mbshell
+  525  ./mbshell
+  526  g++ mbShell.cpp -o mbshell
+  527  ./mbshell
+  528  g++ mbShell.cpp -o mbshell
+  529  ./mbshell
+  530  g++ mbShell.cpp -o mbshell
+  531  ./mbshell
+  532  g++ mbShell.cpp -o mbshell
+  533  ./mbshell
+  534  g++ mbShell.cpp -o mbshell
+  535  ./mbshell
+  536  g++ mbbang.cpp -o mbbang
+  537  g++ mbShell.cpp -o mbshell
+  538  ./mbshell
+  539  !
+  540  history
+  541  !
+  542  g++ mbShell.cpp -o mbshell
+  543  ./mbshell
+  544  g++ mbShell.cpp -o mbshell
+  545  ./mbshell
+  546  g++ mbShell.cpp -o mbshell
+  547  ./mbshell
+  548  g++ mbShell.cpp -o mbshell
+  549  ./mbshell
+  550  g++ mbShell.cpp -o mbshell
+  551  ./mbshell
+  552  git status
+  553  git add *
+  554  git status
+  555  git commit -m "update bang, shell"
+  556  git push
+  557  ls
+  558  git status
+  559  git rm *
+  560  git status
+  561  git rm redirect_stdout/02_dup2.cpp
+  562  git rm redirect_stdout/README.md
+  563  redirect_stdout/demoTwoDup
+  564  git rm redirect_stdout/demoTwoDup
+  565  git status
+  566  git commit -m "remove unneeded files"
+  567  git push
+  568  ls
+  569  git status
+  570  git rm redirect_stdout/dup2DemoWun.cpp
+  571  git rm redirect_stdout/dup2di
+  572  git rm redirect_stdout/inptfl.txt
+  573  git rm redirect_stdout/input.txt
+  574  git rm redirect_stdout/outpt.txt
+  575  git rm redirect_stdout/output.txt
+  576  git rm redirect_stdout/outputone.txt
+  577  ls
+  578  git status
+  579  git commit -m "update"
+  580  git push
+  581  git status
+  582  ls
+  583  g++ mbShell.cpp -o mbshell
+  584  ./mbshell
+  585  g++ mbShell.cpp -o mbshell
+  586  ./mbshell
+  587  g++ mbShell.cpp -o mbshell
+  588  ./mbshell
+  589  ls > output.txt
+  590  ls >output.txt
+  591  grep p$ >output.txt
+  592  grep -E p$ -
+  593  ls | grep -E p$ - >output.txt
+  594  ls | grep -E p$ - > output.txt
+  595  ls | grep -E c$ - > output.txt
+  596  ls | grep -E h$ - > output.txt
+  597  ls | grep -E p$ - >output.txt
+  598  ls | grep -E p$ ->output.txt
+  599  ls | grep -E c$ ->output.txt
+  600  ls | grep -E t$ ->output.txt
+  601  ls>output.txt
+  602  ls > output.txt
+  603  history > output.txt
+  604  g++ mbShell.cpp -o mbshell
+  605  ./mbshell
+  606  ps -aux>foo.txt
+  607  ./mbshell
+  608  history
+  609  ls
+  610  ls > foo.txt
+  611  history
+  612  history > foo.txt
