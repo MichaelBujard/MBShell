@@ -11,7 +11,7 @@ This shell will have the following commands:
 
 - bang (!) 30 points
 - history 30 points
-- redirect file to stdin(<) 40 points 
+- redirect file from stdout(>) 40 points 
 
 for a total of 100 points.
 
@@ -25,7 +25,7 @@ for a total of 100 points.
 
 |	pipe	40
 &	Background process	30
->	Redirect stdout to file	
+'>'	Redirect stdout to file	
 40
 
 < 	Redirect file to stdin	
