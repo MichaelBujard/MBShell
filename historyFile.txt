@@ -90,3 +90,8 @@
 90 ls
 91 ls
 92 ls
+93 ls
+94 exit
+95 ls
+96 exit
+97 ls

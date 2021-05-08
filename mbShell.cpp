@@ -88,16 +88,19 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 stringstream sscommand(c_command);
                 string segment;
                 vector<string> segvctr;
-                while (getline(sscommand, segment, '>')) {
-                    //segment.erase(remove_if(segment.begin(), segment.end(), isspace), segment.end());
+                while (getline(sscommand, segment,
+                 '>')) {
                     segvctr.push_back(segment);
                     cout << "type of segment is " << typeid(segment).name() << endl;
                     cout << "SEGMENT : " << segment << endl;
                 }
                 // loop through variables, removing whitespace.
-                for (std::size_t i = 0; i < segvctr.size(); i++) {
-                    cout << segvctr.at(i) << endl;
+                // does not work
+                for (auto &element : segvctr) {
+                    element.erase(remove_if(element.begin(), element.end(), isspace), element.end());
+                    cout << "modified vector of strings segment " << element << endl;
                 }
+
                 /*
                     * now we have something like:
                     * vector<string> segvctr{"![index] "};
