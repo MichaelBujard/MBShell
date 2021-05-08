@@ -1,180 +1,30 @@
 1 ls
 2 pwd
-3 ls -l
-4 ls -l -h -a
-5 ps -aux
-6 du
-7 ps -aux
-8 ps -aux
-9 du
-10 du
-11 pwd
-12 du
-13 du
-14 ls -l
-15 du
-16 ls -l
-17 du
-18 ls -l
-19 du
-20 du
-21 ls -l
-22 ls -l
-23 ls -l
-24 ls -l
+3 ps -aux
+4 du
+5 history
+6 ls
+7 ls
+8 du
+9 history
+10 exit
+11 !
+12 !
+13 exit
+14 exit
+15 exit
+16 history
+17 ls
+18 ls
+19 ls
+20 history
+21 ls
+22 ls
+23 history
+24 ls
 25 pwd
-26 ls
+26 history
 27 pwd
-28 ls
-29 ls -l
-30 du
-31 ls
-32 pwd
-33 history
-34 !
-35 ls -l
-36 ls
-37 ls
-38 history
-39 1-1
-40 1-1
-41 history
-42 pwd
-43 ps -aux
-44 ps -aux
-45 history
-46 !
-47 !
-48 ls
-49 ls -l -h -a
-50 history
-51 history
-52 ls
-53 exit 
-54 history
-55 history
-56 history
-57 exit 
-58 history
-59 ls -l -h -a
-60 ls -l -h -a
-61 ls -l
-62 ps -aux
-63 du
-64 ls
-65 pwd
-66 ls -l
-67 ps -aux
-68 history
-69 history
-70 history
-71 ls
-72 !
-73 !
-74 !
-75 !
-76 ls
-77 pwd
-78 pwd
-79 exit 
-80 exit 
-81 exit 
-82 history
-83 ls -l -h -a
-84 ps -aux
-85 pwd
-86 ls
-87 history
-88 history
-89 ls
-90 ls
-91 ls
-92 ls
-93 ls
-94 history
-95 history
-96 ls
-97 ls
-98 ls
-99 ls
-100 ls
-101 !
-102 mbls
-103 mbls
-104 ls
-105 ls -l -h -a
-106 du
-107 ps -aux
-108 ls
-109 history
-110 ls
-111 ls
-112 ls
-113 history
-114 ls -l -h -a
-115 ls -l -h -a
-116 pwd
-117 !
-118 !
-119 !
-120 ls
-121 ls
-122 ls
-123 pwd
-124 ls -l
-125 ls -l
-126 pwd
-127 du
-128 w
-129 w
-130 w
-131 ls
-132 ls -l
-133 ls -l -h
-134 ls -l -h
-135 ls -l
-136 ls
-137 w
-138 w
-139 ls
-140 history
-141 history
-142 history
-143 history
-144 history
-145 ls
-146 ls
-147 ls -l
-148 du
-149 pwd
-150 ls -l
-151 ps -aux
-152 ls -l
-153 history
-154 history
-155 !
-156 !
-157 !
-158 !
-159 history
-160 ls
-161 ls -l
-162 history
-163 !
-164 !
-165 !
-166 history
-167 !
-168 history
-169 history
-170 ls -l -h
-171 ls -l -h
-172 ls
-173 history
-174 pwd
-175 du
-176 cat "hi" > inputfile.txt
-177 ls > inputfile.txt
-178 cat mbhistory.cpp
-179 echo "hi" > input.txt
-180 cat input.txt
+28 ps -aux
+29 du
+30 exit

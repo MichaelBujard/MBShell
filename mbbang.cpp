@@ -111,7 +111,11 @@ string get_bangcmd(int offset){
     
     if (offset < 0) {
         // relative address. Make absolute by subtracting from length of history file, minus 1.
-        offset += numLines++;
+        offset += numLines;
+    }
+
+    if (offset > numLines) {
+        cout << "mbbash: !" << offset << ": event not found" << endl;
     }
 
     // access the history command at the line number specified by offset
