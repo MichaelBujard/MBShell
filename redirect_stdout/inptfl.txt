@@ -1,0 +1,10 @@
+02_dup2.cpp
+README.md
+demoTwoDup
+dup2DemoWun.cpp
+dup2di
+inptfl.txt
+input.txt
+outpt.txt
+output.txt
+outputone.txt

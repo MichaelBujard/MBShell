@@ -169,3 +169,12 @@
 169 history
 170 ls -l -h
 171 ls -l -h
+172 ls
+173 history
+174 pwd
+175 du
+176 cat "hi" > inputfile.txt
+177 ls > inputfile.txt
+178 cat mbhistory.cpp
+179 echo "hi" > input.txt
+180 cat input.txt
