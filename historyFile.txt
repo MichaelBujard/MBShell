@@ -28,3 +28,38 @@
 28 ls > h.txt
 29 exit
 30 exit
+31 ls
+32 pwd
+33 du
+34 ps -aux
+35 history
+36 ps -aux
+37 ps -aux
+38 ps -aux > f.txt
+39 ls > f.txt
+40 ls >f.txt
+41 ls >f.txt >f.txt
+42 exit
+43 ls
+44 history
+45 ! >  f.txt
+46 ls >f.txt
+47 pwd>f.txt
+48 exit
+49 ls
+50 ls -l
+51 pwd
+52 !
+53 !
+54 ls
+55 ls > f.txt
+56 pwd > f.txt
+57 ls
+58 ! >  f.txt
+59 exit
+60 ls
+61 pwd
+62 du
+63 ! >  f.txt
+64 ls > f.txt
+65 exit

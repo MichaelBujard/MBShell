@@ -15,7 +15,7 @@
 #include <bits/stdc++.h>
 #include <stdlib.h>
 #include <fcntl.h>
-
+#include <vector>
 
 using namespace std;
 
@@ -87,7 +87,8 @@ bool redirect(string str);
 /*
  * global variables
  */
-int saved_stdout;
+int saved_stdout;  // for use with redirect.
+bool redirect_flag; // so that we know when to do a special case with fork() on redirect.
 
 
 int main(int argc, char* argv[]){
@@ -105,10 +106,12 @@ void mbShell::execute(){
 }
 
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
-    cout << "parse_and_execute called" << endl;
+    cout << "parse_and_execute called" << endl;    
 
     string c_command = c;
     int flag = 0;
+    redirect_flag = redirect(c_command);  // check the command to see if it had a redirect
+    cout << "redirect flag has value of : " << redirect_flag << endl;
     while(flag != 1) {
 
         c_command = handle_history_c_command(c_command);
@@ -130,26 +133,12 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     if (redirect(c_command)) {
         // execute the command and redirect output to file.
-        stringstream sscommand(c_command);
-        string segment;
-        vector<string> segvctr_processed;
-        while (getline(sscommand, segment, '>')) {
-            cout << "unprocessed segment : '" << segment << "'" << endl;
-            int beginningOfSegmentIndex = findFirstIndex(segment, ' ');
-            int endOfSegmentIndex = findLastIndex(segment, ' ') + 1;
-            segment = segment.substr(beginningOfSegmentIndex, endOfSegmentIndex);
-            segvctr_processed.push_back(segment);
-            cout << "processed segment : '" << segment << "'" << endl;
-        }
+        
+        vector<string> segvctr_processed = split_redirect(c_command);
 
-        /*
-         * now we have something like:
-         * vector<string> segvctr{"![index]", "file.txt"};
-         */
-
-
-        // to execute the command, get the command, which is the front of the vector.
         c_command = segvctr_processed.front();
+
+        //close(fd);
 
         // get the file descriptor, which is the last segment of the vector
         //char *file_name = (char *)segvctr_processed.back().c_str();
@@ -182,10 +171,9 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     char *cp = (char *)c_command.c_str();
 
     if (c_command.compare("history") == 0) {
-        cp = (char *)c_as_executable.c_str();
+        cp = (char *)c_as_executable.c_str();  // the only useful case for c_as_executable
     } else if (c_command.compare("!") == 0){
-        // do nothing
-        // cp = (char *)c_as_executable.c_str();
+        // do nothing yet.
     }
 
 
@@ -193,6 +181,50 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     // after fork, it's done, so below these lines reclaim stdout to the terminal.
     if (c_command.compare("!") != 0){
         char** argv = get_input(cp);
+
+        // what if we have a redirect?
+        if (redirect_flag) {
+            // what happens on redirect?
+
+            /*
+             * pipe,
+             * fork:
+             *      child:
+             *          1. close 
+             *
+             *      parent: 
+             */ 
+            int status;
+            int pipefd[2]; // instantiate pipe
+
+
+            // argv[0] = "ls";
+            // argv[1] = "-l";
+            // argv[2] = 0;
+            
+            pipe(pipefd);
+
+            int pid = fork();
+
+            if (pid == 0) // Child
+            {
+                close(pipefd[0]);
+                close(1);
+                dup(pipefd[1]);
+                execvp(argv[0], argv);
+                cout << "this was kung fu" << endl;
+            } else // Parent
+            {
+                FILE *f = fdopen(pipefd[0], "r");
+                FILE *fp = fopen("file.txt", "w");
+                
+
+            }
+
+
+            ofstream someFile;
+
+        }
         fork_a_process(fork(), argv);
     }
 
@@ -416,8 +448,6 @@ int findFirstIndex(string& str, char x) {
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 string handle_history_c_command(string cmd) {
 
-    int flag = 0;  // for the case where the command is "! > file.txt"
-
     if (cmd.substr(0, 1).compare("!") == 0 && cmd.compare("!") != 0) {
         cout << "c_command : " << cmd << endl;
         if (redirect(cmd)) {
@@ -429,11 +459,11 @@ string handle_history_c_command(string cmd) {
             // which is something like '> foo.txt'
 
             /*
-                * 1. split the command into '![offset]' and ' > foo.txt'
-                * spaces are a bit of a problem, so we will just remove them. See
-                * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
-                * about removal of spaces.
-                */
+             * 1. split the command into '![offset]' and ' > foo.txt'
+             * spaces are a bit of a problem, so we will just remove them. See
+             * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
+             * about removal of spaces.
+             */
             stringstream sscommand(cmd);
             string segment;
             
@@ -515,4 +545,23 @@ int handle_history_update(string cmd) {
 bool redirect(string str) 
 {
     return (str.find('>') != std::string::npos);
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * 
+ */
+vector<string> split_redirect(string s)
+{
+    stringstream sscmd(s);
+        string sgmnt;
+        vector<string> segvctr;
+        while (getline(sscmd, sgmnt, '>')) {
+            cout << "unprocessed segment : '" << sgmnt << "'" << endl;
+            int beginIndex = findFirstIndex(sgmnt, ' ');
+            int endIndex = findLastIndex(sgmnt, ' ') + 1;
+            sgmnt = sgmnt.substr(beginIndex, endIndex);
+            segvctr.push_back(sgmnt);
+            cout << "processed segment : '" << sgmnt << "'" << endl;
+        }
+        return segvctr;
 }
