@@ -28,5 +28,3 @@
 28 ls > h.txt
 29 exit
 30 exit
-31 exit
-32 exit

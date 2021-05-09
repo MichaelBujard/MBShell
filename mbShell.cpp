@@ -77,6 +77,13 @@ int handle_history_update(string strc);
   *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 vector<string> split_redirect(string s);
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * bool redirect(string str)     *
+ * returns true if the command   *
+ * has a redirect, else false.   *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+bool redirect(string str);
+
 /*
  * global variables
  */
@@ -112,7 +119,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     }
 
-    string c_as_executable;  // the executable file of the c command...because the commands are files
+    string c_as_executable;  // the executable file/name of the c command...
+    // because some of the commands are files (only history, actually.)
     c_as_executable = c_command;
     cout << "Just outside updating history, c_as_executable = " << c_as_executable << endl;
 
@@ -120,7 +128,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     // note that if there was a redirect, we need to address this first so that the command, 
     // ![index] or history or other, may be parsed below
 
-    if (c_command.find('>') != std::string::npos) {
+    if (redirect(c_command)) {
         // execute the command and redirect output to file.
         stringstream sscommand(c_command);
         string segment;
@@ -412,7 +420,7 @@ string handle_history_c_command(string cmd) {
 
     if (cmd.substr(0, 1).compare("!") == 0 && cmd.compare("!") != 0) {
         cout << "c_command : " << cmd << endl;
-        if (cmd.find((string)">") != std::string::npos) {
+        if (redirect(cmd)) {
             cout << "FOUND '>'" << endl;
             // we have a command like !-1 > foo.txt
             // first, get the command that ![offset] calls,
@@ -489,7 +497,6 @@ string handle_history_c_command(string cmd) {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
  * int handle_history_update(string strc)  *
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 int handle_history_update(string cmd) {
     if (updateHistoryFile(cmd) == 0) {
         cout << "updated history file" << endl;
@@ -498,4 +505,14 @@ int handle_history_update(string cmd) {
         perror("history");
         return -1;
     }
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * bool redirect(string str)     *
+ * returns true if the command   *
+ * has a redirect, else false.   *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+bool redirect(string str) 
+{
+    return (str.find('>') != std::string::npos);
 }
