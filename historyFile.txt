@@ -63,3 +63,19 @@
 63 ! >  f.txt
 64 ls > f.txt
 65 exit
+66 ls
+67 history
+68 exit
+69 ls > file.txt
+70 ls
+71 history
+72 ! >  file.txt
+73 history > file.txt
+74 exit
+75 history > f.txt
+76 ls -l -h -a
+77 history > file.txt
+78 history > file.txt
+79 history > file.txt
+80 history > file.txt
+81 history > f.txt

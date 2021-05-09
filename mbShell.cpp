@@ -160,6 +160,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     }
     if (c_command.compare("history") == 0) {
         c_as_executable = "./mbhistory";
+        cout << "on !71, c_command is history, and c_as_exec... = ./mbhistory" << endl;
     }
     if (c_command.compare("!") == 0) {
         cout << "!" << endl;
@@ -168,6 +169,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     cout << "variable c is " << c << endl;
     cout << "variable c_command is " << c_command << endl;
 
+    // if we have done a ! that evaluates to history, this will become ./mbhistory.
     char *cp = (char *)c_command.c_str();
 
     if (c_command.compare("history") == 0) {
@@ -180,7 +182,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     // in the special case of '>', the program forks and the child writes to the file.
     // after fork, it's done, so below these lines reclaim stdout to the terminal.
     if (c_command.compare("!") != 0){
-        char** argv = get_input(cp);
+        char** argv = get_input(cp);  // This is true for any command except '!' by itself.
+        cout << "argv[0] : " << argv[0] << endl;
 
         // what if we have a redirect?
         if (redirect_flag) {
@@ -201,6 +204,7 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
             // argv[0] = "ls";
             // argv[1] = "-l";
             // argv[2] = 0;
+            // argv is our input now.
             
             pipe(pipefd);
 
@@ -212,12 +216,43 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 close(1);
                 dup(pipefd[1]);
                 execvp(argv[0], argv);
-                cout << "this was kung fu" << endl;
+                cout << "this was fun" << endl;
             } else // Parent
             {
+                char ch;
+
+                /* 
+                 * Instantiate file pointers
+                 * and open for reading / writing.
+                 */
                 FILE *f = fdopen(pipefd[0], "r");
                 FILE *fp = fopen("file.txt", "w");
-                
+
+                /* Ensure f opened successfully*/
+                if (f == NULL)
+                {
+                    puts("Error opening input file");
+                }
+
+                /* Ensure fp opened successfully*/
+                if (fp == NULL)
+                {
+                puts("Error opening output file");
+                }
+
+                /* Read, write */
+                while(1)
+                {
+                    ch = fgetc(f);
+                    if (ch==EOF)
+                        break;
+                    else
+                        fputc(ch, fp);
+                }
+
+                /* Close files */
+                fclose(f);
+                fclose(fp);
 
             }
 
