@@ -40,15 +40,48 @@ char **get_input(char *input);
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void fork_a_process(int pid, char **argv);
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-* string bangCommand(string c);                                 *
+* string get_bangcmd(string c);                                 *
 *                                                               *
 *                                                               *
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 string get_bangcmd(int offset);
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
- * bool is_number(const string &s)                              *
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-bool is_number(const string &s);
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int findLastIndex(string& str, char x)    *
+ * From the right of the string to the left, *
+ * find the first index from the end where   *
+ * the command begins. This is the first     *
+ * non-whitespace character if char x = ' '. *
+ * Return the index.                         *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ int findLastIndex(string& str, char x);
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int findFirstIndex(string& str, char x) *
+ * find the index of the first character   *
+ * in str that does not match x.           *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int findFirstIndex(string& str, char x);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string handle_history_c_command(string c);   *
+ *                                              *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string handle_history_c_command(string str);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int handle_history_update(string strc)  *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int handle_history_update(string strc);
+
+ /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  * vector<string> split_redirect(string s)*
+  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+vector<string> split_redirect(string s);
+
+/*
+ * global variables
+ */
+int saved_stdout;
+
 
 int main(int argc, char* argv[]){
     mbShell ms;
@@ -68,95 +101,75 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     cout << "parse_and_execute called" << endl;
 
     string c_command = c;
-    while(true) {
-        if (c_command.substr(0, 1).compare("!") == 0 && c_command.compare("!") != 0) {
-            cout << "c_command : " << c_command << endl;
-            if (c_command.find((string)">") != std::string::npos) {
-                cout << "FOUND '>'" << endl;
-                // we have a command like !-1 > foo.txt
-                // first, get the command that ![offset] calls,
-                // then store it as c_command
-                // then append the rest of the command to it,
-                // which is something like '> foo.txt'
+    int flag = 0;
+    while(flag != 1) {
 
-                /*
-                    * 1. split the command into '![offset]' and ' > foo.txt'
-                    * spaces are a bit of a problem, so we will just remove them. See
-                    * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
-                    * about removal of spaces.
-                    */
-                stringstream sscommand(c_command);
-                string segment;
-                vector<string> segvctr;
-                while (getline(sscommand, segment,
-                 '>')) {
-                    segvctr.push_back(segment);
-                    cout << "type of segment is " << typeid(segment).name() << endl;
-                    cout << "SEGMENT : " << segment << endl;
-                }
-                // loop through variables, removing whitespace.
-                // does not work
-                for (auto &element : segvctr) {
-                    element.erase(remove_if(element.begin(), element.end(), isspace), element.end());
-                    cout << "modified vector of strings segment " << element << endl;
-                }
+        c_command = handle_history_c_command(c_command);
 
-                /*
-                    * now we have something like:
-                    * vector<string> segvctr{"![index] "};
-
-                // 2. find the command that ! calls from its offset
-
-                // 3. store the command in c_command
-
-                // 4. append the rest of the command to c_command
-
-
-            } else {
-                /*
-                * suppose we are not redirecting with bang. i.e.
-                * suppose we are doing any normal, valid command with 
-                * ![offset] alone. Then in history we just print out the command corresponding to the 
-                * bang, that is, the command in the history file at offset = index of history file
-                */
-
-                string offset_str = c_command.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
-                int offset = stoi(offset_str);  // convert string index to integer
-                c_command = get_bangcmd(offset);
-                cout << "while trying to update history file, c_command is " << c_command << endl;
-            }
-        }        
-        if (updateHistoryFile(c_command) == 0) {
-            cout << "updated history file" << endl;
+        flag = handle_history_update(c_command);
+        if (flag == -1)
             break;
-        } else {
-            perror("history");
-            break;
-        }
+
     }
 
     string c_as_executable;  // the executable file of the c command...because the commands are files
     c_as_executable = c_command;
     cout << "Just outside updating history, c_as_executable = " << c_as_executable << endl;
 
-    if (c_command.compare("exit") == 0){
+
+    // note that if there was a redirect, we need to address this first so that the command, 
+    // ![index] or history or other, may be parsed below
+
+    if (c_command.find('>') != std::string::npos) {
+        // execute the command and redirect output to file.
+        stringstream sscommand(c_command);
+        string segment;
+        vector<string> segvctr_processed;
+        while (getline(sscommand, segment, '>')) {
+            cout << "unprocessed segment : '" << segment << "'" << endl;
+            int beginningOfSegmentIndex = findFirstIndex(segment, ' ');
+            int endOfSegmentIndex = findLastIndex(segment, ' ') + 1;
+            segment = segment.substr(beginningOfSegmentIndex, endOfSegmentIndex);
+            segvctr_processed.push_back(segment);
+            cout << "processed segment : '" << segment << "'" << endl;
+        }
+
+        /*
+         * now we have something like:
+         * vector<string> segvctr{"![index]", "file.txt"};
+         */
+
+
+        // to execute the command, get the command, which is the front of the vector.
+        c_command = segvctr_processed.front();
+
+        // get the file descriptor, which is the last segment of the vector
+        //char *file_name = (char *)segvctr_processed.back().c_str();
+
+
+        // before redirecting output to the file specified, 
+        // save the current stdout for use after we have called the process.
+        //saved_stdout = dup(STDOUT_FILENO);
+
+        // now redirect output from stdout to the file
+        //int redirect_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY);
+        
+        //dup2(redirect_fd, STDOUT_FILENO);
+        //cout << "redirect test" << endl;
+    }
+
+    if (c_command.compare("exit") == 0) {
         exit(0);
     }
-    if (c_command.compare("history") == 0){
+    if (c_command.compare("history") == 0) {
         c_as_executable = "./mbhistory";
     }
-    if (c_command.compare("!") == 0){
+    if (c_command.compare("!") == 0) {
         cout << "!" << endl;
     }
 
     cout << "variable c is " << c << endl;
     cout << "variable c_command is " << c_command << endl;
-
-    if (c_command.find(" > ") != std::string::npos){
-        // starting with simplest use of file redirect from stdout to,
-        // I guess, "non-standard output"
-        cout << "found redirection!" << endl;
-    }
 
     char *cp = (char *)c_command.c_str();
 
@@ -165,16 +178,25 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     } else if (c_command.compare("!") == 0){
         // do nothing
         // cp = (char *)c_as_executable.c_str();
-    } /*else if (c_command.substr(0, 1).compare("!") == 0 && c.compare("!") != 0){
-        c.insert(1, " ");
-        cp = (char *)c.c_str();
     }
-    */
 
+
+    // in the special case of '>', the program forks and the child writes to the file.
+    // after fork, it's done, so below these lines reclaim stdout to the terminal.
     if (c_command.compare("!") != 0){
         char** argv = get_input(cp);
         fork_a_process(fork(), argv);
     }
+
+    // here, reclaim stdout to the terminal...right?
+    /*
+     * restore stdout
+     */
+    //dup2(saved_stdout, STDOUT_FILENO);
+    //close(saved_stdout);
+
+
+    
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -192,6 +214,9 @@ void fork_a_process(int pid, char **argv){
 
         // we are in the child process
         cout << "child: " << pid << endl;     
+
+
+
 
         // child executes here
         if (execvp(argv[0], argv) == -1){
@@ -327,7 +352,11 @@ string get_bangcmd(int offset){
     return histCommand;
 }
 
-void redirect_from_stdout(char *argv[]) {
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ *void redirect_from_stdout(char *argv[], char * filename)         *
+ *                                                                 *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void redirect_from_stdout(char *argv[], string filename) {
     char *command[] = { (char *)"grep", (char *)"-E", (char *)"c$", (char *)"-", 0 };
     char *bin_file = command[0];
 
@@ -340,8 +369,133 @@ void redirect_from_stdout(char *argv[]) {
     }
 }
 
-bool is_number(const std::string& s)
-{
-    return !s.empty() && std::find_if(s.begin(), 
-        s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int findLastIndex(string& str, char x)    *
+ * From the right of the string to the left, *
+ * find the first index from the end where   *
+ * the command begins. This is the first     *
+ * non-whitespace character if char x = ' '. *
+ * Return the index.                         *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int findLastIndex(string& str, char x) {
+    // Traverse from right
+    for (int i = str.length() - 1; i >= 0; i--)
+        if (str[i] != x)
+            return i;
+ 
+    return -1;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int findFirstIndex(string& str, char x) *
+ * find the index of the first character   *
+ * in str that does not match x.           *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int findFirstIndex(string& str, char x) {
+    int index = -1;
+    for (int i = 0; i < str.length(); i++)
+        if (str[i] != x) {
+            index = i;
+            break;
+        }
+    return index;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string handle_history_c_command(string c);   *
+ *                                              *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string handle_history_c_command(string cmd) {
+
+    int flag = 0;  // for the case where the command is "! > file.txt"
+
+    if (cmd.substr(0, 1).compare("!") == 0 && cmd.compare("!") != 0) {
+        cout << "c_command : " << cmd << endl;
+        if (cmd.find((string)">") != std::string::npos) {
+            cout << "FOUND '>'" << endl;
+            // we have a command like !-1 > foo.txt
+            // first, get the command that ![offset] calls,
+            // then store it as c_command
+            // then append the rest of the command to it,
+            // which is something like '> foo.txt'
+
+            /*
+                * 1. split the command into '![offset]' and ' > foo.txt'
+                * spaces are a bit of a problem, so we will just remove them. See
+                * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
+                * about removal of spaces.
+                */
+            stringstream sscommand(cmd);
+            string segment;
+            
+            vector<string> segvctr_unprocessed;
+            vector<string> segvctr_processed;
+            while (getline(sscommand, segment, '>')) {
+                segvctr_unprocessed.push_back(segment);
+                cout << "unprocessed segment : '" << segment << "'" << endl;
+                int beginningOfSegmentIndex = findFirstIndex(segment, ' ');
+                int endOfSegmentIndex = findLastIndex(segment, ' ') + 1;
+                segment = segment.substr(beginningOfSegmentIndex, endOfSegmentIndex);
+                segvctr_processed.push_back(segment);
+                cout << "processed segment : '" << segment << "'" << endl;
+            }
+
+            /*
+                * now we have something like:
+                * vector<string> segvctr{"![index]", "file.txt"};
+            */
+
+            if (segvctr_processed.front().compare("!") == 0) {
+                cmd = "! > " + segvctr_unprocessed.back();
+            } else {
+                // 2. find the command that ! calls from its offset
+                string offset_str = cmd.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
+                int offset = stoi(offset_str);  // convert string index to integer
+                cmd = get_bangcmd(offset);
+                cout << "while trying to update history file \
+                inside special case in handleccmd() '>', c_command is " << cmd << endl;
+
+                // 3. store the command in c_command. Done above.
+
+                // 4. append the rest of the command to c_command
+                cmd = cmd + " >" + segvctr_unprocessed.back();
+                // the above is a temporary fix. We want to be able to have any number 
+                // of file redirects. iterate through the vector and append '>' to the string.
+                //return cmd;
+            }
+
+
+        } else {
+            /*
+            * suppose we are not redirecting with bang. i.e.
+            * suppose we are doing any normal, valid command with 
+            * ![offset] alone. Then in history we just print out the command corresponding to the 
+            * bang, that is, the command in the history file at offset = index of history file
+            */
+
+            string offset_str = cmd.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
+            int offset = stoi(offset_str);  // convert string index to integer
+            cmd = get_bangcmd(offset);
+            cout << "while trying to update history file, c_command is " << cmd << endl;
+            //return cmd;
+        }
+    }
+
+    return cmd;        
+
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int handle_history_update(string strc)  *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+int handle_history_update(string cmd) {
+    if (updateHistoryFile(cmd) == 0) {
+        cout << "updated history file" << endl;
+        return 1;
+    } else {
+        perror("history");
+        return -1;
+    }
 }

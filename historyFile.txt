@@ -1,97 +1,32 @@
 1 ls
 2 pwd
-3 ps -aux
-4 du
+3 du
+4 ps -aux
 5 history
-6 ls
+6 ls -l -h -a
 7 ls
-8 du
+8 ls -l -h -a
 9 history
-10 exit
-11 !
-12 !
-13 exit
-14 exit
+10 ! >  f.txt
+11 ls> f.txt
+12 ls -l -h -a> f.txt
+13 ps -aux> f.txt
+14 history> f.txt
 15 exit
-16 history
+16 exit
 17 ls
-18 ls
-19 ls
-20 history
-21 ls
-22 ls
+18 historry
+19 history
+20 aksjrg sfe fawoj
+21 history
+22 aksjrg sfe fawoj
 23 history
-24 ls
-25 pwd
-26 history
-27 pwd
-28 ps -aux
-29 du
+24 history > f.txt
+25 ls > f.txt
+26 ls > h.txt
+27 pwd > h.txt
+28 ls > h.txt
+29 exit
 30 exit
-31 !
-32 !
-33 !
-34 exit
-35 exit
-36 exit
-37 exit
-38 ls
-39 pwd
-40 ps -aux
-41 du
-42 history
-43 history
-44 du
-45 gfd
-46 oesjf aeofj
-47 mbls ojef
-48 ls oefjd
-49 ls
-50 ls -l -h -a
-51 ls
-52 ls
-53 ls
-54 pwd
-55 ps -aux
-56 
-57 exit
-58 exit
-59 ls
-60 exit
-61 ls > output.txt
-62 ps -aux>foo.txt
-63 exit
-64 ls > foo.txt
-65 exit
-66 ls 
-67 history 
-68 ls -l -h -a 
-69 ls -l -h -a 
-70 ls
-71 exit
-72 ls
-73 ls
-74 ls
-75 exit
-76 ls
-77 exit
-78 exit
-79 exit
-80 exit
-81 ls
-82 exit
-83 ls
-84 >
-85 blabla>>>>
-86 exit
-87 exit
-88 exit
-89 ls
-90 ls
-91 ls
-92 ls
-93 ls
-94 exit
-95 ls
-96 exit
-97 ls
+31 exit
+32 exit
