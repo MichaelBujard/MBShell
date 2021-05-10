@@ -1,138 +1,17 @@
 1 ls
-2 ls
-3 pwd
-4 ls -l -h -a
-5 du
+2 la
+3 ls -l
+4 du
+5 pwd
 6 ps -aux
-7 la
-8 ls
-9 ls -l -h -a
+7 history
+8 history
+9 history
 10 ls
-11 du
-12 la > f.txt
-13 la > test.txt
-14 la > f.txt
-15 la > file.txt
-16 la > file.txt
-17 la > file.txt
-18 la > file.txt
-19 ls > file.txt
-20 la > file.txt
-21 la > file.txt
-22 la
-23 la > file.txt
-24 ls > file.txt
-25 la > file.txt
-26 
-27 ls
-28 la
-29 la > file.txt
-30 la > file.txt
-31 la > file.txt
-32 \la > file.txt
-33 la > file.txt
-34 ls
-35 la > file.txt
-36 ls > file.txt
-37 la > file.txt
-38 la > file.txt
-39 la > file.txt
-40 ls 
-41 
-42 pa
-43 ps -aux
-44 ps -aux
-45 ps -aux
-46 ps -aux
-47 ps -aux
-48 ls
-49 ls
-50 ls
-51 la
-52 ls
-53 ps -aux
-54 du
-55 pwd
-56 history
-57 la
-58 la
-59 la
-60 history
-61 history
-62 du
-63 la > file.txt
-64 ls
-65 ls -kl
-66 ps -aux
-67 ls
-68 exit
-69 la > file.txt
-70 la > file.txt
-71 la > file.txt
-72 la > file.txt
-73 ls > file.tct
-74 ls > file.txt
-75 ls > file.txt > file.txt
-76 la
-77 la -l
-78 ls
-79 ls
-80 ls
-81 ls -l
-82 ls -l -h -a
-83 ls -a
-84 la
-85 ls
-86 pwd
-87 pa
-88 paw
-89 pwd
-90 la
-91 ls
-92 ls -a
-93 ls
-94 ls -a
-95 la
-96 la
-97 ls
-98 ls
-99 ls
-100 ls
-101 la
-102 ls -a
-103 pwd > mb.txt
-104 pwd > file.txt
-105 ls > file.txt
-106 pwd > file.txt
-107 ps -aux > file.txt
-108 la
-109 la > file.txt
-110 ls -a > file.txt
-111 ls -a > file.txt
-112 ls -a > file.txt > file.txt
-113 ls -a > file.txt > file.txt > f.txt
-114 ls > file.txt > f.txt
-115 ls < lewjf > f.txt
-116 ls > ldjfa > file.txt
-117 la
-118 la
-119 ls
-120 pwd
-121 history
-122 ls
-123 la
-124 exit
-125 exit
-126 exit
-127 [A[A
-128 la
-129 la
-130 exit
-131 exit
-132 la
-133 ls
-134 la
-135 ls
-136 ls
-137 ls
-138 pwd
+11 !
+12 ls
+13 !
+14 pwd
+15 pwd
+16 history
+17 history
