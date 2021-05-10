@@ -78,17 +78,41 @@ int handle_history_update(string strc);
 vector<string> split_redirect(string s);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
- * bool redirect(string str)     *
+ * bool has_redirect(string str)     *
  * returns true if the command   *
  * has a redirect, else false.   *
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-bool redirect(string str);
+bool has_redirect(string str);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
  * int history(void) 
  * handles the history function.
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 int history(void);
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string check_for_bang(string s);             *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string check_for_bang(string s);
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * bool has_bang(string s);                   *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+bool has_bang(string s);
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * bool is_bang(string s);                    *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+bool is_bang(string s);
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string find_bang_redirect_command(string s); *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string find_bang_redirect_command(string s);
 
 /*
  * global variables
@@ -103,9 +127,13 @@ int main(int argc, char* argv[]){
 
 void mbShell::execute(){
     while (true){
+        // prompt
         cout << greeting;
 
+        // get command from user
+
         getline(cin, command);
+        //command = check_for_bang(command);
         
         parse_and_execute(command);
     }
@@ -116,8 +144,7 @@ void mbShell::parse_and_execute(string c){
     string c_command = c;
 
     int history_flag = 0;
-    redirect_flag = redirect(c_command);  // check the command to see if it had a redirect
-    cout << "redirect flag has value of : " << redirect_flag << endl;
+    redirect_flag = has_redirect(c_command);  // check the command to see if it had a redirect
     while(history_flag != 1) {
 
         c_command = handle_history_c_command(c_command);
@@ -142,7 +169,7 @@ void mbShell::parse_and_execute(string c){
     // note that if there was a redirect, we need to address this first so that the command, 
     // ![index] or history or other, may be parsed below
     string mbstdout_filename; // if we reditect to a file, we will want its name.
-    if (redirect(c_command)) {
+    if (has_redirect(c_command)) {
         // execute the command and redirect output to file.
         
         vector<string> segvctr_processed = split_redirect(c_command);
@@ -155,11 +182,15 @@ void mbShell::parse_and_execute(string c){
     if (c_command.compare("exit") == 0) {
         exit(0);
     }
-    if (c_command.compare("history") == 0) {
-        history();
-        //c_as_executable = "./mbhistory";
-        //cout << "on !71, c_command is history, and c_as_exec... = ./mbhistory" << endl;
+    
+    // hold on for now.
+    // if we have just a simple history command, execute it as normal.
+    if (c_command.compare("history") == 0)
+    {
+        //history();
+        c_as_executable = "./mbhistory";
     }
+    
     if (c_command.compare("!") == 0) {
         cout << "!" << endl;
     }
@@ -170,30 +201,60 @@ void mbShell::parse_and_execute(string c){
 
     char *cp = (char *)c_command.c_str();
 
-    /*
+    
     if (c_command.compare("history") == 0) {
         cp = (char *)c_as_executable.c_str();  // the same thing
-    } else if (c_command.compare("!") == 0){
-        // do nothing yet.
+        cout << "CP : " << cp[0] << endl;        
     }
-    */
+    
 
 
     // in the special case of '>', the program forks and the child writes to the file.
     // after fork, it's done, so below these lines reclaim stdout to the terminal.
-    if (c_command.compare("!") != 0){
+    if (c_command.compare("!") != 0)
+    {
         cout << "entered condition" << endl;
         char** argv = tokenize(cp);  // This is true for any command except '!' by itself.
         cout << "argv[0] : " << argv[0] << endl;
         // what if we have a redirect?
-        if (redirect_flag) {
+        if (redirect_flag) // treat history case separately
+        {
+            /*
+            if (c_command.compare("history") == 0)  // command evaluates to history > file.txt
+            {
+                cout << "history command entered" << endl;
+                
+                ofstream file;
+                file.open(mbstdout_filename, ios::out);
+                string line;
 
-            int pipefd[2]; // instantiate pipe
-            cout << "pipe made" << endl;
-            
+                // Backup streambuffers of cout
+                streambuf *stream_buffer_cout = cout.rdbuf();
+                streambuf *stream_buffer_cin = cin.rdbuf();
+
+                // Get the streambuffer of the file
+                streambuf *stream_buffer_file = file.rdbuf();
+
+                // Redirect cout to file
+                cout.rdbuf(stream_buffer_file);
+
+                // now we can actually start using 'cout << "stuff" to write "stuff" to file
+                cout << "stuff to file" << endl;
+                std::ifstream f("historyFile.txt");
+                if (f.is_open())
+                    std::cout << f.rdbuf();
+
+                // redirect cout back to screen 
+                cout.rdbuf(stream_buffer_cout);
+                cout <<  "stuff to terminal" << endl;
+
+                file.close();
+            } else  // command does not evaluate to 'history > file.txt' for some file.
+            {  */
+
+                
+            int pipefd[2];
             pipe(pipefd);
-
-            cout << "pipe piped" << endl;
 
             int pid = fork();
             if (pid == 0) // Child
@@ -204,18 +265,18 @@ void mbShell::parse_and_execute(string c){
                 dup(pipefd[1]);
                 close(pipefd[0]);
                 execvp(argv[0], argv);
+                
             } else // Parent
             {
-                ofstream file;
+                ofstream file;            
                 close(pipefd[1]);
                 FILE *virtual_file = fdopen(pipefd[0], "r");
                 file.open(mbstdout_filename); // here replace with the filename given by command
                 char c[1000];  // fix so that it will input an arbitrary number of lines.
-                cout << "before fgets" << endl;
 
                 while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
                 {
-                    file << c;
+                    file << c; 
                 }
                 cout << "parent process: OK here" << endl;
 
@@ -225,9 +286,11 @@ void mbShell::parse_and_execute(string c){
 
             }
 
-        } else {
+        } else 
+        {
             fork_a_process(fork(), argv);
         }   
+
     }
 }
 
@@ -252,8 +315,6 @@ void fork_a_process(int pid, char **argv){
 
         // child executes here
         if (execvp(argv[0], argv) == -1){
-
-            cout << "exec failed here" << endl;
             perror("exec");
         }
     }
@@ -267,23 +328,28 @@ void fork_a_process(int pid, char **argv){
     }
 }
 
-
-int updateHistoryFile(string c) {
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * int updateHistoryFile(string c)              *
+ *                                              *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int updateHistoryFile(string c) 
+{
     int numLines = 1;
     ifstream in("historyFile.txt");
     std::string unused;
-    while ( std::getline(in, unused) ){
+    while ( std::getline(in, unused) )
+    {
         ++numLines;
     }
     in.close();
 
-    // instantiate file
+    // instantiate file if needed
     std::ofstream ofs;
 
-    // open file for writing
+    // open file for writing. Append if file exists.
     ofs.open("historyFile.txt", std::ofstream::out | std::ofstream::app);
 
-    // enter the command into the history file
+    // append the command to the history file
     ofs << numLines << " " << c << endl;
     ofs.close();
     return 0;
@@ -293,7 +359,8 @@ int updateHistoryFile(string c) {
  * See:
  * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
  */
-char **tokenize(char *input){
+char **tokenize(char *input)
+{
 
     char **cmd = (char **)malloc(10 * sizeof(char *));  // allocate for 10 command line args
 
@@ -303,7 +370,8 @@ char **tokenize(char *input){
 
     parsed = strtok(input, separator);
 
-    while (parsed != NULL){
+    while (parsed != NULL)
+    {
 
         cmd[index] = (char*)malloc(80 * sizeof(char));
         strcpy(cmd[index], parsed);  // make bunch of char pointer variables to do strcpy      
@@ -420,25 +488,25 @@ int findFirstIndex(string& str, char x) {
 string handle_history_c_command(string cmd) {
 
     if (cmd.substr(0, 1).compare("!") == 0 && cmd.compare("!") != 0) {
-        cout << "cmd initial in handle_history_c_command() : " << cmd << endl;
         if (cmd.compare("!!") == 0)
         {
             cmd = "!-1";
         }
-        if (redirect(cmd)) {
-            // we have a command like !-1 > foo.txt
-            // first, get the command that ![offset] calls,
+        if (has_redirect(cmd)) {
+            // we have a command like !-1 > foo.txt (or !! > foo.txt)
+            // first, get the command that ![offset] calls,\
+
             // then store it as c_command
             // then append the rest of the command to it,
             // which is something like '> foo.txt'
 
             /*
-             * 1. split the command into '![offset]' and ' > foo.txt'
+             * 1. split the command into '![offset]' (or '!!') and ' > foo.txt'
              * spaces are a bit of a problem, so we will just remove them. See
              * https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
              * about removal of spaces.
              */
-            stringstream sscommand(cmd);
+            stringstream sscommand(cmd);  // could be !! > ...
             string segment;
             
             vector<string> segvctr_unprocessed;
@@ -449,23 +517,31 @@ string handle_history_c_command(string cmd) {
                 int endOfSegmentIndex = findLastIndex(segment, ' ') + 1;
                 segment = segment.substr(beginningOfSegmentIndex, endOfSegmentIndex);
                 segvctr_processed.push_back(segment);
-                cout << "processed segment : '" << segment << "'" << endl;
+
             }
 
             /*
                 * now we have something like:
                 * vector<string> segvctr{"![index]", "file.txt"};
+                * change '!!' to '!-1' before continuing.
             */
 
-            if (segvctr_processed.front().compare("!") == 0) {
-                cmd = "! >" + segvctr_unprocessed.back();
-            } else {
+            if (segvctr_processed.front().compare("!!") == 0)
+            {
+                cmd = "!-1 >" + segvctr_unprocessed.back();
+            }
+
+            // if the command before redirection is just '!', then 
+            // we don't want to deal with any offset, so just return cmd.
+            // if not, we need to deal with the offset.
+            if (segvctr_processed.front().compare("!") != 0)
+            {
                 // 2. find the command that ! calls from its offset
                 string offset_str = cmd.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
                 int offset = stoi(offset_str);  // convert string index to integer
                 cmd = get_bangcmd(offset);
-                cout << "while trying to update history file \
-                inside special case in handleccmd() '>', c_command is " << cmd << endl;
+                cout << "while trying to update history file " << endl;
+                cout << " inside special case in handleccmd() '>', c_command is " << cmd << endl;
 
                 // 3. store the command in c_command. Done above.
 
@@ -476,8 +552,8 @@ string handle_history_c_command(string cmd) {
                 //return cmd;
             }
 
-
-        } else {
+        } else // if no redirection, just '![offset] alone
+        {
             /*
             * suppose we are not redirecting with bang. i.e.
             * suppose we are doing any normal, valid command with 
@@ -500,21 +576,24 @@ string handle_history_c_command(string cmd) {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
  * int handle_history_update(string strc)  *
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-int handle_history_update(string cmd) {
-    if (updateHistoryFile(cmd) == 0) {
+int handle_history_update(string cmd) 
+{
+    if (updateHistoryFile(cmd) == 0) 
+    {
         return 1;
-    } else {
+    } else 
+    {
         perror("history");
         return -1;
     }
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
- * bool redirect(string str)     *
+ * bool has_redirect(string str)     *
  * returns true if the command   *
  * has a redirect, else false.   *
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-bool redirect(string str) 
+bool has_redirect(string str) 
 {
     return (str.find('>') != std::string::npos);
 }
@@ -548,4 +627,45 @@ int history(void)
         std::cout << f.rdbuf();
         
     return 0;
+}
+
+string check_for_bang(string s)
+{
+    string cmd = s;
+
+    if (is_bang(s))
+    {
+        cmd = s;
+    }
+
+    if (has_bang(s))
+    {
+        if (has_redirect(s))
+        {
+            find_bang_redirect_command(s);
+            stringstream sscommand(cmd);  // could be !! > ...
+            string segment;
+            vector<string> segvctr_processed;
+            getline(sscommand, segment, '>');
+            cmd = segment.substr(1, findLastIndex(segment, ' '));
+        } else {
+
+        }
+    }
+    return cmd;
+}
+
+bool has_bang(string s)
+{
+    return (s.substr(0, 1).compare("!") == 0);
+}
+
+bool is_bang(string s)
+{
+    return (s.compare("!") == 0);
+}
+
+string find_bang_redirect_command(string s)
+{
+    return s;
 }

@@ -22,8 +22,3 @@
 22 history > file.txt
 23 history
 24 history > file.txt
-25 history > file.txt > f.txt
-26 pwd > f.txt
-27 history > f.txt
-28 ls > f.txt
-29 rm f.txt
