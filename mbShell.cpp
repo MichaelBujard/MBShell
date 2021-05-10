@@ -170,36 +170,38 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
     if (c_command.compare("!") != 0){
         char** argv = get_input(cp);  // This is true for any command except '!' by itself.
         cout << "argv[0] : " << argv[0] << endl;
-
         // what if we have a redirect?
         if (redirect_flag) {
 
             int pipefd[2]; // instantiate pipe
+            cout << "pipe made" << endl;
             
             pipe(pipefd);
 
-            int pid = fork();
+            cout << "pipe piped" << endl;
 
+            int pid = fork();
             if (pid == 0) // Child
             {
+                
+                cout << "In the child: argv[0] = " << argv[0] << endl;
                 close(1);
                 dup(pipefd[1]);
                 close(pipefd[0]);
-                cout << "In the fork child: argv[0] = " << argv[0] << endl;
                 execvp(argv[0], argv);
-                cout << "this was fun" << endl;
             } else // Parent
             {
                 ofstream file;
                 close(pipefd[1]);
                 FILE *virtual_file = fdopen(pipefd[0], "r");
                 file.open(mbstdout_filename); // here replace with the filename given by command
-
                 char c[1000];  // fix so that it will input an arbitrary number of lines.
+                if (virtual_file == NULL)
                 while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
                 {
                     file << c;
                 }
+                cout << "parent process: OK here" << endl;
 
                 /* Close files */
                 fclose(virtual_file);

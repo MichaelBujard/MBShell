@@ -1,106 +1,68 @@
-1 ls
-2 pwd
-3 du
-4 ps -aux
-5 history
-6 ls -l -h -a
-7 ls
-8 ls -l -h -a
-9 history
-10 ! >  f.txt
-11 ls> f.txt
-12 ls -l -h -a> f.txt
-13 ps -aux> f.txt
-14 history> f.txt
-15 exit
-16 exit
-17 ls
-18 historry
-19 history
-20 aksjrg sfe fawoj
-21 history
-22 aksjrg sfe fawoj
-23 history
-24 history > f.txt
-25 ls > f.txt
-26 ls > h.txt
-27 pwd > h.txt
-28 ls > h.txt
-29 exit
-30 exit
-31 ls
-32 pwd
-33 du
-34 ps -aux
-35 history
-36 ps -aux
-37 ps -aux
-38 ps -aux > f.txt
-39 ls > f.txt
-40 ls >f.txt
-41 ls >f.txt >f.txt
-42 exit
-43 ls
-44 history
-45 ! >  f.txt
-46 ls >f.txt
-47 pwd>f.txt
-48 exit
+1 la
+2 ls
+3 pwd
+4 ls -l -h -a
+5 du
+6 ps -aux
+7 la
+8 ls
+9 ls -l -h -a
+10 ls
+11 du
+12 la > f.txt
+13 la > test.txt
+14 la > f.txt
+15 la > file.txt
+16 la > file.txt
+17 la > file.txt
+18 la > file.txt
+19 ls > file.txt
+20 la > file.txt
+21 la > file.txt
+22 la
+23 la > file.txt
+24 ls > file.txt
+25 la > file.txt
+26 
+27 ls
+28 la
+29 la > file.txt
+30 la > file.txt
+31 la > file.txt
+32 \la > file.txt
+33 la > file.txt
+34 ls
+35 la > file.txt
+36 ls > file.txt
+37 la > file.txt
+38 la > file.txt
+39 la > file.txt
+40 ls 
+41 
+42 pa
+43 ps -aux
+44 ps -aux
+45 ps -aux
+46 ps -aux
+47 ps -aux
+48 ls
 49 ls
-50 ls -l
-51 pwd
-52 !
-53 !
-54 ls
-55 ls > f.txt
-56 pwd > f.txt
-57 ls
-58 ! >  f.txt
-59 exit
-60 ls
-61 pwd
+50 ls
+51 la
+52 ls
+53 ps -aux
+54 du
+55 pwd
+56 history
+57 la
+58 la
+59 la
+60 history
+61 history
 62 du
-63 ! >  f.txt
-64 ls > f.txt
-65 exit
-66 ls
-67 history
+63 la > file.txt
+64 ls
+65 ls -kl
+66 ps -aux
+67 ls
 68 exit
-69 ls > file.txt
-70 ls
-71 history
-72 ! >  file.txt
-73 history > file.txt
-74 exit
-75 history > f.txt
-76 ls -l -h -a
-77 history > file.txt
-78 history > file.txt
-79 history > file.txt
-80 history > file.txt
-81 history > f.txt
-82 ls
-83 pwd
-84 du
-85 ps -aux
-86 history
-87 ls
-88 history
-89 ps -aux
-90 history
-91 history > t.txt
-92 history
-93 ls
-94 ls > file.txt
-95 ls
-96 ls > file.txt
-97 exit
-98 ls > file.txt
-99 history > file.txt
-100 history
-101 ls > file.txt
-102 history > file.txt
-103 pwd > f.txt
-104 ls >t.txt
-105 exit
-106 exit
