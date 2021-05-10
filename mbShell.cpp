@@ -195,8 +195,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 FILE *virtual_file = fdopen(pipefd[0], "r");
                 file.open(mbstdout_filename); // here replace with the filename given by command
 
-                char c[1000];
-                while (fgets(c, 999, virtual_file) != NULL)
+                char c[1000];  // fix so that it will input an arbitrary number of lines.
+                while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
                 {
                     file << c;
                 }
