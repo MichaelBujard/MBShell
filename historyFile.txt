@@ -79,3 +79,28 @@
 79 history > file.txt
 80 history > file.txt
 81 history > f.txt
+82 ls
+83 pwd
+84 du
+85 ps -aux
+86 history
+87 ls
+88 history
+89 ps -aux
+90 history
+91 history > t.txt
+92 history
+93 ls
+94 ls > file.txt
+95 ls
+96 ls > file.txt
+97 exit
+98 ls > file.txt
+99 history > file.txt
+100 history
+101 ls > file.txt
+102 history > file.txt
+103 pwd > f.txt
+104 ls >t.txt
+105 exit
+106 exit

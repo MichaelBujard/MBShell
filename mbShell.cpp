@@ -130,29 +130,15 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
     // note that if there was a redirect, we need to address this first so that the command, 
     // ![index] or history or other, may be parsed below
-
+    string mbstdout_filename; // if we reditect to a file, we will want its name.
     if (redirect(c_command)) {
         // execute the command and redirect output to file.
         
         vector<string> segvctr_processed = split_redirect(c_command);
 
         c_command = segvctr_processed.front();
-
-        //close(fd);
-
-        // get the file descriptor, which is the last segment of the vector
-        //char *file_name = (char *)segvctr_processed.back().c_str();
-
-
-        // before redirecting output to the file specified, 
-        // save the current stdout for use after we have called the process.
-        //saved_stdout = dup(STDOUT_FILENO);
-
-        // now redirect output from stdout to the file
-        //int redirect_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY);
+        mbstdout_filename = segvctr_processed.back();
         
-        //dup2(redirect_fd, STDOUT_FILENO);
-        //cout << "redirect test" << endl;
     }
 
     if (c_command.compare("exit") == 0) {
@@ -187,24 +173,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
         // what if we have a redirect?
         if (redirect_flag) {
-            // what happens on redirect?
 
-            /*
-             * pipe,
-             * fork:
-             *      child:
-             *          1. close 
-             *
-             *      parent: 
-             */ 
-            int status;
             int pipefd[2]; // instantiate pipe
-
-
-            // argv[0] = "ls";
-            // argv[1] = "-l";
-            // argv[2] = 0;
-            // argv is our input now.
             
             pipe(pipefd);
 
@@ -212,66 +182,35 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
 
             if (pid == 0) // Child
             {
-                close(pipefd[0]);
                 close(1);
                 dup(pipefd[1]);
+                close(pipefd[0]);
+                cout << "In the fork child: argv[0] = " << argv[0] << endl;
                 execvp(argv[0], argv);
                 cout << "this was fun" << endl;
             } else // Parent
             {
-                char ch;
+                ofstream file;
+                close(pipefd[1]);
+                FILE *virtual_file = fdopen(pipefd[0], "r");
+                file.open(mbstdout_filename); // here replace with the filename given by command
 
-                /* 
-                 * Instantiate file pointers
-                 * and open for reading / writing.
-                 */
-                FILE *f = fdopen(pipefd[0], "r");
-                FILE *fp = fopen("file.txt", "w");
-
-                /* Ensure f opened successfully*/
-                if (f == NULL)
+                char c[1000];
+                while (fgets(c, 999, virtual_file) != NULL)
                 {
-                    puts("Error opening input file");
-                }
-
-                /* Ensure fp opened successfully*/
-                if (fp == NULL)
-                {
-                puts("Error opening output file");
-                }
-
-                /* Read, write */
-                while(1)
-                {
-                    ch = fgetc(f);
-                    if (ch==EOF)
-                        break;
-                    else
-                        fputc(ch, fp);
+                    file << c;
                 }
 
                 /* Close files */
-                fclose(f);
-                fclose(fp);
+                fclose(virtual_file);
+                file.close();
 
             }
 
-
-            ofstream someFile;
-
-        }
-        fork_a_process(fork(), argv);
+        } else {
+            fork_a_process(fork(), argv);
+        }   
     }
-
-    // here, reclaim stdout to the terminal...right?
-    /*
-     * restore stdout
-     */
-    //dup2(saved_stdout, STDOUT_FILENO);
-    //close(saved_stdout);
-
-
-    
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
