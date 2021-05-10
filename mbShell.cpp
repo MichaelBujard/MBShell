@@ -87,7 +87,6 @@ bool redirect(string str);
 /*
  * global variables
  */
-int saved_stdout;  // for use with redirect.
 bool redirect_flag; // so that we know when to do a special case with fork() on redirect.
 
 
@@ -99,14 +98,14 @@ int main(int argc, char* argv[]){
 void mbShell::execute(){
     while (true){
         cout << greeting;
-        getline(cin, command);      
 
+        getline(cin, command);
+        
         parse_and_execute(command);
     }
 }
 
 void mbShell::parse_and_execute(string c){  // fill the argv array...parse...where?
-    cout << "parse_and_execute called" << endl;    
 
     string c_command = c;
     int flag = 0;
@@ -196,7 +195,8 @@ void mbShell::parse_and_execute(string c){  // fill the argv array...parse...whe
                 FILE *virtual_file = fdopen(pipefd[0], "r");
                 file.open(mbstdout_filename); // here replace with the filename given by command
                 char c[1000];  // fix so that it will input an arbitrary number of lines.
-                if (virtual_file == NULL)
+                cout << "before fgets" << endl;
+
                 while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
                 {
                     file << c;
@@ -253,7 +253,6 @@ void fork_a_process(int pid, char **argv){
 
 
 int updateHistoryFile(string c) {
-    cout << "updateHistoryFile called in parse_and_execute" << endl;
     int numLines = 1;
     ifstream in("historyFile.txt");
     std::string unused;
@@ -279,7 +278,6 @@ int updateHistoryFile(string c) {
  * https://indradhanush.github.io/blog/writing-a-unix-shell-part-2/
  */
 char **get_input(char *input){
-    cout << "get_input function called in parse_and_execute" << endl;
 
     char **command = (char **)malloc(10 * sizeof(char *));  // allocate for 10 command line args
 
@@ -322,7 +320,6 @@ string get_bangcmd(int offset){
     std::string unused;
     while ( std::getline(in, unused) )
         ++numLines;
-    cout << "numLines " << numLines << endl;
     in.close();
     
     if (offset < 0) {
@@ -364,25 +361,7 @@ string get_bangcmd(int offset){
         }
     }
     inFile.close();
-    cout << "in get_bangcmd, the command is " << histCommand << endl;
     return histCommand;
-}
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
- *void redirect_from_stdout(char *argv[], char * filename)         *
- *                                                                 *
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-void redirect_from_stdout(char *argv[], string filename) {
-    char *command[] = { (char *)"grep", (char *)"-E", (char *)"c$", (char *)"-", 0 };
-    char *bin_file = command[0];
-
-    int redirect_fd = open(".txt", O_CREAT | O_TRUNC | O_WRONLY);
-    dup2(redirect_fd, STDOUT_FILENO);
-    close(redirect_fd);
-
-    if (execvp(bin_file, command) == -1) {
-        cerr << "Error executing " << bin_file << endl;
-    }
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -425,9 +404,8 @@ int findFirstIndex(string& str, char x) {
 string handle_history_c_command(string cmd) {
 
     if (cmd.substr(0, 1).compare("!") == 0 && cmd.compare("!") != 0) {
-        cout << "c_command : " << cmd << endl;
+        cout << "cmd initial in handle_history_c_command() : " << cmd << endl;
         if (redirect(cmd)) {
-            cout << "FOUND '>'" << endl;
             // we have a command like !-1 > foo.txt
             // first, get the command that ![offset] calls,
             // then store it as c_command
@@ -447,7 +425,6 @@ string handle_history_c_command(string cmd) {
             vector<string> segvctr_processed;
             while (getline(sscommand, segment, '>')) {
                 segvctr_unprocessed.push_back(segment);
-                cout << "unprocessed segment : '" << segment << "'" << endl;
                 int beginningOfSegmentIndex = findFirstIndex(segment, ' ');
                 int endOfSegmentIndex = findLastIndex(segment, ' ') + 1;
                 segment = segment.substr(beginningOfSegmentIndex, endOfSegmentIndex);
@@ -461,7 +438,7 @@ string handle_history_c_command(string cmd) {
             */
 
             if (segvctr_processed.front().compare("!") == 0) {
-                cmd = "! > " + segvctr_unprocessed.back();
+                cmd = "! >" + segvctr_unprocessed.back();
             } else {
                 // 2. find the command that ! calls from its offset
                 string offset_str = cmd.erase(0, 1);  // remove "./mbbang" substring to get just "[index]"
@@ -505,7 +482,6 @@ string handle_history_c_command(string cmd) {
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 int handle_history_update(string cmd) {
     if (updateHistoryFile(cmd) == 0) {
-        cout << "updated history file" << endl;
         return 1;
     } else {
         perror("history");
@@ -532,12 +508,10 @@ vector<string> split_redirect(string s)
         string sgmnt;
         vector<string> segvctr;
         while (getline(sscmd, sgmnt, '>')) {
-            cout << "unprocessed segment : '" << sgmnt << "'" << endl;
             int beginIndex = findFirstIndex(sgmnt, ' ');
             int endIndex = findLastIndex(sgmnt, ' ') + 1;
             sgmnt = sgmnt.substr(beginIndex, endIndex);
             segvctr.push_back(sgmnt);
-            cout << "processed segment : '" << sgmnt << "'" << endl;
         }
         return segvctr;
 }
