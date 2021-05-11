@@ -11,10 +11,3 @@
 11 history > file.txt
 12 ls > file.txt
 13 history > file.txt > f.txt
-14 exit
-15 ls
-16 ls -l
-17 pwd
-18 history
-19 history
-20 history > file.txt

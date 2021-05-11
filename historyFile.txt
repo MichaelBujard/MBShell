@@ -1,0 +1,20 @@
+1 ls
+2 pwd
+3 du
+4 w
+5 ps -aux
+6 history
+7 history
+8 ls
+9 ps -aux
+10 history
+11 history > file.txt
+12 ls > file.txt
+13 history > file.txt > f.txt
+14 exit
+15 ls
+16 ls -l
+17 pwd
+18 history
+19 history
+20 history > file.txt

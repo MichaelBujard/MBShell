@@ -102,15 +102,35 @@ bool has_bang(string s);
 bool is_bang(string s);
 
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
  * string find_bang_redirect_string_offset(string s); *
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 string find_bang_redirect_string_offset(string s);
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
- * string find_bang_redirect_string_offset(string s); *
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string find_bang_redirect_string_offset(string s);    *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 string find_command_from_history_string_offset(string stroffs);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_cmd_from_bang_with_index(string bang_with_index)    *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_cmd_from_bang_with_index(string bang_with_index); 
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_left_of_redirect(string c)                          *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_left_of_redirect(string c);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_right_of_redirect(string c)                         *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_right_of_redirect(string c);
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * string get_bang_redirectcommand(string c)                      *
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+string get_bang_redirect_command(string c);
 
 /*
  * global variables
@@ -147,7 +167,8 @@ void mbShell::parse_and_execute(string c){
     redirect_flag = has_redirect(c_command);  // check the command to see if it had a redirect
     while(history_flag != 1) {
 
-        c_command = handle_history_c_command(c_command);
+        //c_command = handle_history_c_command(c_command);  
+        // Note: it appears check_if_bang() is enough now.
 
         history_flag = handle_history_update(c_command);
         if (history_flag == -1){
@@ -157,14 +178,12 @@ void mbShell::parse_and_execute(string c){
 
     }
 
-    // because the history command in mbshell is located in a separate file,
-    // when we enter "history" we must change the command 
-    // to the name of the executable file, "./mbhistory"
-    string c_as_executable;  // the executable file/name of the c command...
-    // because some of the commands are files (only history, actually.)
-    c_as_executable = c_command;
-    //cout << "Just outside updating history, c_as_executable = " << c_as_executable << endl;
-
+    /*
+     * because the history command in mbshell is located in a separate file,
+     * when we enter "history" we must change the command 
+     * to the name of the executable file, "./mbhistory"
+     */
+    string c_as_executable;
 
     // note that if there was a redirect, we need to address this first so that the command, 
     // ![index] or history or other, may be parsed below
@@ -183,15 +202,14 @@ void mbShell::parse_and_execute(string c){
         exit(0);
     }
     
-    // hold on for now.
-    // if we have just a simple history command, execute it as normal.
+
     if (c_command.compare("history") == 0)
     {
         c_as_executable = "./mbhistory";
     }
     
     if (c_command.compare("!") == 0) {
-        //cout << "!" << endl;
+        cout << "!" << endl;
     }
 
     char *cp = (char *)c_command.c_str();
@@ -203,57 +221,51 @@ void mbShell::parse_and_execute(string c){
     }
     
 
+    char** argv = tokenize(cp);  // This is true for any command except '!' by itself.
 
-    // in the special case of '>', the program forks and the child writes to the file.
-    // after fork, it's done, so below these lines reclaim stdout to the terminal.
-    if (c_command.compare("!") != 0)
+    //cout << "argv[0] : " << argv[0] << endl;
+    // what if we have a redirect?
+    if (redirect_flag) // treat history case separately
     {
-        //cout << "entered condition" << endl;
-        char** argv = tokenize(cp);  // This is true for any command except '!' by itself.
-        //cout << "argv[0] : " << argv[0] << endl;
-        // what if we have a redirect?
-        if (redirect_flag) // treat history case separately
+            
+        int pipefd[2];
+        pipe(pipefd);
+
+        int pid = fork();
+        if (pid == 0) // Child
         {
-                
-            int pipefd[2];
-            pipe(pipefd);
+            
+            //cout << "In the child: argv[0] = " << argv[0] << endl;
+            close(1);
+            dup(pipefd[1]);
+            close(pipefd[0]);
+            execvp(argv[0], argv);
+            
+        } else // Parent
+        {
+            ofstream file;            
+            close(pipefd[1]);
+            FILE *virtual_file = fdopen(pipefd[0], "r");
+            file.open(mbstdout_filename); // here replace with the filename given by command
+            char c[1000];  // fix so that it will input an arbitrary number of lines.
 
-            int pid = fork();
-            if (pid == 0) // Child
+            while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
             {
-                
-                //cout << "In the child: argv[0] = " << argv[0] << endl;
-                close(1);
-                dup(pipefd[1]);
-                close(pipefd[0]);
-                execvp(argv[0], argv);
-                
-            } else // Parent
-            {
-                ofstream file;            
-                close(pipefd[1]);
-                FILE *virtual_file = fdopen(pipefd[0], "r");
-                file.open(mbstdout_filename); // here replace with the filename given by command
-                char c[1000];  // fix so that it will input an arbitrary number of lines.
-
-                while (fgets(c, 999, virtual_file) != NULL)  // Only 1000 lines now
-                {
-                    file << c; 
-                }
-                //cout << "parent process: OK here" << endl;
-
-                /* Close files */
-                fclose(virtual_file);
-                file.close();
-
+                file << c; 
             }
+            //cout << "parent process: OK here" << endl;
 
-        } else 
-        {
-            fork_a_process(fork(), argv);
-        }   
+            /* Close files */
+            fclose(virtual_file);
+            file.close();
 
-    }
+        }
+
+    } else 
+    {
+        fork_a_process(fork(), argv);
+    }   
+
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -268,13 +280,6 @@ void fork_a_process(int pid, char **argv){
         perror("fork");
     }    
     if (pid == 0){ 
-
-        // we are in the child process
-        //cout << "child: " << pid << endl;     
-
-
-
-
         // child executes here
         if (execvp(argv[0], argv) == -1){
             perror("exec");
@@ -585,45 +590,52 @@ string check_for_bang(string s)
 
     if (cmd.substr(0, 2).compare("!!") == 0)
     {
-        cmd = "!-1";
+        if (has_redirect(cmd))
+        {
+            cmd = cmd.erase(0, 2);
+            cmd = "!-1" + cmd;
+        } else 
+        {
+            cmd = "!-1";
+        }
     }
     if (has_bang(cmd))  // could have index with redirect, or just ![index], or an invalid command.
     {
         if (has_redirect(cmd))
         {
-            if (cmd.substr(0, 1).compare("!") == 0)
-            {
-                // do nothing
-            } else 
+            string bang_redirect_command = get_bang_redirect_command(cmd);
+            string right_of_redirect = get_right_of_redirect(cmd);
+            //cout << "right_of_redirect '" << right_of_redirect << endl;
+
+            if (bang_redirect_command.compare("!") != 0)
             {
                 cmd = find_bang_redirect_string_offset(cmd);
                 cmd = find_command_from_history_string_offset(cmd);
             }
-
-        } else if (cmd.compare("!") == 0)
+            //cout << "cmd '" << cmd << endl;
+            cmd = cmd + " >" + right_of_redirect;            
+        } else if (cmd.compare("!") != 0)        
         {
-            //do nothing
-        } else        
-        {
-            cmd = cmd.erase(0, 1);
-            cmd = find_command_from_history_string_offset(cmd);
-            //cout << "here" << endl;            
+            cmd = get_cmd_from_bang_with_index(cmd);           
         }
     }
     //cout << "handle bang : '" << cmd << "'" << endl;
     return cmd;
 }
 
+/* bool has_bang(string s) */ 
 bool has_bang(string s)
 {
     return (s.substr(0, 1).compare("!") == 0);
 }
 
+/* bool is_bang(string s) */
 bool is_bang(string s)
 {
     return (s.compare("!") == 0);
 }
 
+/* string find_bang_redirect_string_offset */
 string find_bang_redirect_string_offset(string cmd)
 {
     stringstream sscommand(cmd);  // could be !! > ...
@@ -636,9 +648,52 @@ string find_bang_redirect_string_offset(string cmd)
     return cmd + ">" + segment;
 }
 
+
+/* string find_command_from_history_string_offset(string stroffs) */
 string find_command_from_history_string_offset(string stroffs)
 {
     string os = stroffs;
     int i = stoi(os);
     return get_bangcmd(i);
+}
+
+/* string get_cmd_from_bang_with_index(string bang_with_index) */
+string get_cmd_from_bang_with_index(string bang_with_index) 
+{
+    string cmd;
+    cmd = bang_with_index.erase(0, 1);
+    cmd = find_command_from_history_string_offset(cmd);
+    return cmd;
+}
+
+/* string get_left_of_redirect(string c) */
+string get_left_of_redirect(string c)
+{
+    stringstream sscommand(c);
+    string left;
+    getline(sscommand, left, '>');
+    return left;
+}
+
+/* string get_right_of_redirect(string c) */
+string get_right_of_redirect(string c)
+{
+    stringstream sscommand(c);
+    string right;
+    getline(sscommand, right, '>');
+    getline(sscommand, right, '>');
+    //cout << "right should be file.txt" << endl;
+    //cout << right << endl;
+    return right;
+}
+
+/* string get_bang_redirect_command(string c) */
+string get_bang_redirect_command(string c)
+{
+    string cmd = get_left_of_redirect(c);
+    int beginIndex = findFirstIndex(cmd, ' ');
+    int endIndex = findLastIndex(cmd, ' ') + 1;
+    cmd = cmd.substr(beginIndex, endIndex);
+    //cout << "command from redirect is '" << cmd << "'" << endl;
+    return cmd;
 }
