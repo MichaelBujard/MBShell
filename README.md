@@ -6,12 +6,11 @@ This shell will have the following commands:
 # COMMANDS:
 - ls
 - pwd
-- 
-# TODO:
-
 - bang (!) 30 points
 - history 30 points
 - redirect file from stdout(>) 40 points 
+# TODO:
+- all done.
 
 for a total of 100 points.
 
@@ -19,7 +18,7 @@ for a total of 100 points.
 -Google Cloud Shell Editor
 
 # VERSION CONTROL:
--GitHub (this repo)
+-GitHub
 
 # Point System:
 
@@ -47,5 +46,4 @@ Up arrow	Capture up-arrow to scroll back through recent history
 20
 
 # Deadlines:
-- due the day of final exams, 
-- ? Monday, May 10?
+- Met.
